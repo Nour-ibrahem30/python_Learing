@@ -75,17 +75,6 @@ export function About() {
           {/* Social Links with animated icons */}
           <div className="social-links">
             <motion.a 
-              href="https://www.youtube.com/channel/UCLm1BmQbIiJ2Knm1WSkj7_Q" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="social-link youtube"
-              aria-label="YouTube"
-              whileHover="hover"
-            >
-              <motion.span className="social-icon" variants={iconHoverVariants}>📺</motion.span>
-              <span>YouTube</span>
-            </motion.a>
-            <motion.a 
               href="https://github.com/Nour-ibrahem30" 
               target="_blank" 
               rel="noopener noreferrer"
