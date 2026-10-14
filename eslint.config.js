@@ -5,9 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'backend/node_modules']),
+  // Frontend React files
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['src/**/*.{js,jsx}'],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,
@@ -25,6 +26,24 @@ export default defineConfig([
       }],
       // Allow non-component exports in context files
       'react-refresh/only-export-components': ['warn', { allowExportNames: ['useAuth'] }]
+    }
+  },
+  // Backend Node.js files
+  {
+    files: ['backend/**/*.{js,mjs}'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Allow underscore-prefixed variables to be unused (placeholder params)
+      'no-unused-vars': ['error', { 
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }],
     }
   },
 ])

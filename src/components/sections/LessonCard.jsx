@@ -49,13 +49,16 @@ function useTilt(shouldReduce) {
 
 // Typing animation component for code preview
 function TypedCode({ code, shouldAnimate, index }) {
-  const [displayedChars, setDisplayedChars] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  // Initialize state based on whether animation should run
+  const [displayedChars, setDisplayedChars] = useState(() => 
+    shouldAnimate ? 0 : code.length
+  );
+  const [hasAnimated, setHasAnimated] = useState(!shouldAnimate);
   const ref = useRef(null);
 
   useEffect(() => {
+    // Skip if animation shouldn't run or already ran
     if (!shouldAnimate || hasAnimated) {
-      setDisplayedChars(code.length);
       return;
     }
 
@@ -88,10 +91,13 @@ function TypedCode({ code, shouldAnimate, index }) {
     return () => observer.disconnect();
   }, [code, shouldAnimate, hasAnimated, index]);
 
+  // Ensure full code shows when animation is disabled
+  const charsToShow = shouldAnimate ? displayedChars : code.length;
+
   return (
     <pre className="code-preview" ref={ref}>
-      {code.substring(0, displayedChars)}
-      {displayedChars < code.length && shouldAnimate && (
+      {code.substring(0, charsToShow)}
+      {charsToShow < code.length && shouldAnimate && (
         <span className="typing-cursor">|</span>
       )}
     </pre>

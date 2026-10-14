@@ -28,7 +28,6 @@ function AnimatedCounter({ number, isInView }) {
   useEffect(() => {
     if (!isInView) return;
     
-    let start = 0;
     const end = parseInt(number, 10);
     const duration = 400;
     const startTime = performance.now();

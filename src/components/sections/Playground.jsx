@@ -13,6 +13,8 @@ function generateConfetti(count = 25) {
     color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
     rotation: Math.random() * 360,
     scale: 0.5 + Math.random() * 0.5,
+    // Pre-compute random x displacement for animation
+    xDisplacement: (Math.random() - 0.5) * 100,
   }));
 }
 
@@ -126,7 +128,7 @@ export function Playground() {
                     y: 200,
                     opacity: 0,
                     rotate: particle.rotation + 360,
-                    x: (Math.random() - 0.5) * 100,
+                    x: particle.xDisplacement,
                   }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1.2, ease: 'easeOut' }}

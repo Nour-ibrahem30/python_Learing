@@ -4,20 +4,20 @@ import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import './NotFoundPage.css';
 
-// Floating code snippets data
+// Floating code snippets data - pre-compute random durations
 const floatingSnippets = [
-  { text: '{}', x: '10%', y: '20%', delay: 0 },
-  { text: 'def', x: '85%', y: '15%', delay: 0.5 },
-  { text: 'class', x: '15%', y: '70%', delay: 1 },
-  { text: 'import', x: '80%', y: '75%', delay: 1.5 },
-  { text: '# comment', x: '50%', y: '10%', delay: 2 },
-  { text: 'return', x: '90%', y: '45%', delay: 2.5 },
-  { text: 'if:', x: '5%', y: '45%', delay: 3 },
-  { text: 'True', x: '70%', y: '85%', delay: 3.5 },
+  { text: '{}', x: '10%', y: '20%', delay: 0, yDuration: 4.8, xDuration: 5.3, rotateDuration: 6.2 },
+  { text: 'def', x: '85%', y: '15%', delay: 0.5, yDuration: 5.1, xDuration: 6.4, rotateDuration: 7.1 },
+  { text: 'class', x: '15%', y: '70%', delay: 1, yDuration: 4.5, xDuration: 5.8, rotateDuration: 6.5 },
+  { text: 'import', x: '80%', y: '75%', delay: 1.5, yDuration: 5.6, xDuration: 6.1, rotateDuration: 7.4 },
+  { text: '# comment', x: '50%', y: '10%', delay: 2, yDuration: 4.3, xDuration: 5.5, rotateDuration: 6.8 },
+  { text: 'return', x: '90%', y: '45%', delay: 2.5, yDuration: 5.2, xDuration: 6.7, rotateDuration: 6.3 },
+  { text: 'if:', x: '5%', y: '45%', delay: 3, yDuration: 4.9, xDuration: 5.2, rotateDuration: 7.2 },
+  { text: 'True', x: '70%', y: '85%', delay: 3.5, yDuration: 5.4, xDuration: 6.3, rotateDuration: 6.9 },
 ];
 
 // Floating Code Snippet Component
-function FloatingSnippet({ text, x, y, delay }) {
+function FloatingSnippet({ text, x, y, delay, yDuration, xDuration, rotateDuration }) {
   return (
     <motion.span
       className="floating-snippet"
@@ -31,9 +31,9 @@ function FloatingSnippet({ text, x, y, delay }) {
       }}
       transition={{
         opacity: { duration: 0.5, delay },
-        y: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay },
-        x: { duration: 5 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay },
-        rotate: { duration: 6 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay }
+        y: { duration: yDuration, repeat: Infinity, ease: 'easeInOut', delay },
+        x: { duration: xDuration, repeat: Infinity, ease: 'easeInOut', delay },
+        rotate: { duration: rotateDuration, repeat: Infinity, ease: 'easeInOut', delay }
       }}
     >
       {text}
