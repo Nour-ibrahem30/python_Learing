@@ -1,0 +1,34 @@
+{
+  "id": "FEAT-005",
+  "type": "feat",
+  "description": "Add wave animation at top of Footer, hover animations on links, and animated back-to-top button. Enhance global.css with smooth page transitions, scroll-triggered animation utilities, animated focus states, and loading skeleton animations. Must preserve all existing global styles, CSS variables, and reduced-motion handling.",
+  "status": "completed",
+  "steps": [
+    "1. In src/components/layout/Footer.jsx: Add SVG wave at top of footer using motion.path with animate={{ d: wavePathVariants }} for morphing wave effect. Alternatively use CSS @keyframes wave with translateX animation on repeated wave pattern",
+    "2. In src/components/layout/Footer.css: Add ::before pseudo-element with wave SVG background-image, animate with @keyframes wave-scroll that moves background-position. Set height: 20px, position above footer",
+    "3. In src/components/layout/Footer.jsx: Wrap links in motion.a with whileHover={{ y: -2, color: 'var(--blue)' }}. Add staggered entrance animation for footer children using variants",
+    "4. In src/components/layout/Footer.jsx: Enhance 'لفوق ↑' back-to-top link with animated arrow. Use motion.span on arrow with animate={{ y: [0, -5, 0] }} repeat: Infinity. Add smooth scroll onClick handler",
+    "5. In src/styles/global.css: Add CSS classes for scroll-triggered animations: .animate-on-scroll with opacity:0 and transform: translateY(20px), .animate-on-scroll.visible with opacity:1 and transform:none with transition. These are utility classes for JS-triggered animations",
+    "6. In src/styles/global.css: Enhance focus-visible styles with animated outline. Change outline to box-shadow with transition: box-shadow 0.2s ease. Add @keyframes focus-pulse for subtle glow animation on focused elements",
+    "7. In src/styles/global.css: Add .skeleton and @keyframes skeleton-shimmer for loading states. Skeleton has linear-gradient background that animates via background-position. Add .skeleton-text, .skeleton-image variants",
+    "8. In src/styles/global.css: Ensure ALL new animations have corresponding rule in @media (prefers-reduced-motion: reduce) block to disable them. Set animation: none, transition: none for new animated classes",
+    "9. Verify: Run 'npm run build'. Confirm existing --transition-fast, --transition-normal variables still work. Test that footer links and back-to-top still function."
+  ],
+  "acceptance_criteria": [
+    "Footer has animated wave decoration at top edge",
+    "Footer links have smooth hover animation (lift + color change)",
+    "Back-to-top button has bouncing arrow animation",
+    "Back-to-top scrolls page smoothly when clicked",
+    "Global utility classes available for scroll-triggered animations",
+    "Focus states have animated outline/glow effect",
+    "Skeleton loading animations available as utility classes",
+    "All new animations respect prefers-reduced-motion",
+    "Existing CSS variables and global styles preserved",
+    "npm run build passes with no errors"
+  ],
+  "verification": [
+    "Run 'npm run build' in c:\\Users\\nouri\\Desktop\\Githup Projects\\python_Learing and verify exit code 0"
+  ],
+  "blocked_reason": null,
+  "findings": "All animations implemented successfully. Footer wave uses CSS @keyframes with SVG background for smooth performance. Skeleton utilities support text, title, image, avatar, button, and card variants. All new animations have corresponding rules in prefers-reduced-motion block."
+}

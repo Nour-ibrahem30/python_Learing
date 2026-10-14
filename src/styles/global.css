@@ -39,11 +39,24 @@ button {
   background: none;
 }
 
+/* Focus states with animated glow */
+@keyframes focus-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(48, 101, 200, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(48, 101, 200, 0.2);
+  }
+}
+
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 3px solid var(--blue);
-  outline-offset: 5px;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(48, 101, 200, 0.4);
+  border-radius: var(--radius-sm);
+  animation: focus-pulse 1.5s ease-in-out infinite;
+  transition: box-shadow var(--transition-fast);
 }
 
 code, pre {
@@ -79,7 +92,123 @@ img {
   background: #c5c8be;
 }
 
-/* Reduced motion */
+/* ===========================
+   Scroll-triggered animations
+   =========================== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-on-scroll-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.animate-on-scroll-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-on-scroll-right {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.animate-on-scroll-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-on-scroll-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.animate-on-scroll-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===========================
+   Skeleton loading animations
+   =========================== */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--line) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    var(--line) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 0.5em;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text:last-child {
+  width: 70%;
+}
+
+.skeleton-title {
+  height: 1.5em;
+  width: 60%;
+  margin-bottom: 1em;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.skeleton-button {
+  height: 40px;
+  width: 120px;
+  border-radius: var(--radius-md);
+}
+
+/* Skeleton card container */
+.skeleton-card {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+/* ===========================
+   Reduced motion
+   =========================== */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -89,5 +218,29 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  /* Disable focus pulse animation */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    animation: none;
+    box-shadow: 0 0 0 3px rgba(48, 101, 200, 0.4);
+  }
+  
+  /* Disable scroll-triggered animations - show immediately */
+  .animate-on-scroll,
+  .animate-on-scroll-left,
+  .animate-on-scroll-right,
+  .animate-on-scroll-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  
+  /* Disable skeleton shimmer */
+  .skeleton {
+    animation: none;
+    background: var(--line);
   }
 }

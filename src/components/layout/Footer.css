@@ -1,3 +1,13 @@
+/* Wave animation at top of footer */
+@keyframes wave-scroll {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 200px;
+  }
+}
+
 footer {
   max-width: 1180px;
   margin: auto;
@@ -8,6 +18,22 @@ footer {
   justify-content: space-between;
   font-size: 12px;
   color: #74796c;
+  position: relative;
+}
+
+/* Animated wave decoration */
+footer::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M0,10 C50,0 50,20 100,10 C150,0 150,20 200,10 L200,20 L0,20 Z' fill='%233065c8' opacity='0.1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 200px 20px;
+  animation: wave-scroll 3s linear infinite;
+  pointer-events: none;
 }
 
 footer .brand {
@@ -29,12 +55,41 @@ footer .made-by b {
   font-weight: 600;
 }
 
-footer a:last-child {
+/* Footer links hover animation */
+footer a {
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
+}
+
+footer a:hover {
+  color: var(--blue);
+  transform: translateY(-2px);
+}
+
+/* Back to top button arrow animation */
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+footer .back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   transition: color var(--transition-fast);
 }
 
-footer a:last-child:hover {
+footer .back-to-top:hover {
   color: var(--blue);
+}
+
+footer .back-to-top .arrow {
+  display: inline-block;
+  animation: bounce-arrow 1s ease-in-out infinite;
 }
 
 @media (max-width: 700px) {
@@ -45,9 +100,25 @@ footer a:last-child:hover {
     margin-inline: 24px;
   }
   
+  footer::before {
+    left: -24px;
+    right: -24px;
+  }
+  
   footer p {
     width: 100%;
     order: 3;
     margin: 0;
+  }
+}
+
+/* Reduced motion for footer animations */
+@media (prefers-reduced-motion: reduce) {
+  footer::before {
+    animation: none;
+  }
+  
+  footer .back-to-top .arrow {
+    animation: none;
   }
 }
