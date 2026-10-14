@@ -85,6 +85,17 @@ export function LessonPage() {
                     ))}
                   </div>
                 )}
+                
+                {lesson.pdfUrl && (
+                  <a 
+                    href={lesson.pdfUrl} 
+                    download 
+                    className="pdf-download-btn"
+                  >
+                    <span className="pdf-icon">📥</span>
+                    حمّل الـ PDF
+                  </a>
+                )}
               </motion.div>
             </div>
             

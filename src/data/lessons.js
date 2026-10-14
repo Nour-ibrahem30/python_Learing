@@ -19,6 +19,7 @@ export const lessons = [
     theme: 'blue',
     number: '01',
     videoUrl: '',
+    pdfUrl: '/pdfs/01-whetting-appetite.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/appetite.html',
     docsSection: '1. Whetting Your Appetite',
     topics: ['لماذا Python؟', 'مميزات اللغة', 'استخداماتها']
@@ -35,6 +36,7 @@ export const lessons = [
     theme: 'yellow',
     number: '02',
     videoUrl: '',
+    pdfUrl: '/pdfs/02-using-interpreter.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/interpreter.html',
     docsSection: '2. Using the Python Interpreter',
     topics: ['تثبيت Python', 'تشغيل الـ Interpreter', 'Interactive Mode']
@@ -51,6 +53,7 @@ export const lessons = [
     theme: 'purple',
     number: '03',
     videoUrl: '',
+    pdfUrl: '/pdfs/03-informal-intro.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/introduction.html',
     docsSection: '3. An Informal Introduction to Python',
     topics: ['Numbers', 'Strings', 'Lists', 'المتغيرات']
@@ -69,6 +72,7 @@ export const lessons = [
     theme: 'green',
     number: '04',
     videoUrl: '',
+    pdfUrl: '/pdfs/04-if-statements.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#if-statements',
     docsSection: '4.1. if Statements',
     topics: ['if', 'elif', 'else', 'المقارنات']
@@ -85,6 +89,7 @@ export const lessons = [
     theme: 'pink',
     number: '05',
     videoUrl: '',
+    pdfUrl: '/pdfs/05-for-statements.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#for-statements',
     docsSection: '4.2. for Statements',
     topics: ['for loop', 'iteration', 'sequences']
@@ -101,6 +106,7 @@ export const lessons = [
     theme: 'orange',
     number: '06',
     videoUrl: '',
+    pdfUrl: '/pdfs/06-range-function.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#the-range-function',
     docsSection: '4.3. The range() Function',
     topics: ['range()', 'تسلسل الأرقام', 'start, stop, step']
@@ -117,6 +123,7 @@ export const lessons = [
     theme: 'blue',
     number: '07',
     videoUrl: '',
+    pdfUrl: '/pdfs/07-break-continue.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops',
     docsSection: '4.4. break and continue Statements',
     topics: ['break', 'continue', 'else في loops']
@@ -133,6 +140,7 @@ export const lessons = [
     theme: 'yellow',
     number: '08',
     videoUrl: '',
+    pdfUrl: '/pdfs/08-defining-functions.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#defining-functions',
     docsSection: '4.8. Defining Functions',
     topics: ['def', 'parameters', 'return', 'arguments']
@@ -149,6 +157,7 @@ export const lessons = [
     theme: 'purple',
     number: '09',
     videoUrl: '',
+    pdfUrl: '/pdfs/09-default-arguments.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#default-argument-values',
     docsSection: '4.9.1. Default Argument Values',
     topics: ['default values', 'optional parameters']
@@ -165,6 +174,7 @@ export const lessons = [
     theme: 'green',
     number: '10',
     videoUrl: '',
+    pdfUrl: '/pdfs/10-lambda-expressions.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions',
     docsSection: '4.9.6. Lambda Expressions',
     topics: ['lambda', 'anonymous functions']
@@ -183,6 +193,7 @@ export const lessons = [
     theme: 'pink',
     number: '11',
     videoUrl: '',
+    pdfUrl: '/pdfs/11-more-on-lists.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/datastructures.html#more-on-lists',
     docsSection: '5.1. More on Lists',
     topics: ['list methods', 'append', 'extend', 'pop', 'sort']
@@ -199,6 +210,7 @@ export const lessons = [
     theme: 'orange',
     number: '12',
     videoUrl: '',
+    pdfUrl: '/pdfs/12-list-comprehensions.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions',
     docsSection: '5.1.3. List Comprehensions',
     topics: ['list comprehension', 'filtering', 'mapping']
@@ -215,6 +227,7 @@ export const lessons = [
     theme: 'blue',
     number: '13',
     videoUrl: '',
+    pdfUrl: '/pdfs/13-tuples-sequences.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences',
     docsSection: '5.3. Tuples and Sequences',
     topics: ['tuples', 'unpacking', 'immutable']
@@ -231,6 +244,7 @@ export const lessons = [
     theme: 'yellow',
     number: '14',
     videoUrl: '',
+    pdfUrl: '/pdfs/14-sets.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/datastructures.html#sets',
     docsSection: '5.4. Sets',
     topics: ['sets', 'unique values', 'set operations']
@@ -247,6 +261,7 @@ export const lessons = [
     theme: 'purple',
     number: '15',
     videoUrl: '',
+    pdfUrl: '/pdfs/15-dictionaries.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/datastructures.html#dictionaries',
     docsSection: '5.5. Dictionaries',
     topics: ['dict', 'key-value', 'methods']
@@ -265,6 +280,7 @@ export const lessons = [
     theme: 'green',
     number: '16',
     videoUrl: '',
+    pdfUrl: '/pdfs/16-fancier-output.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/inputoutput.html#fancier-output-formatting',
     docsSection: '7.1. Fancier Output Formatting',
     topics: ['f-strings', 'format()', 'string formatting']
@@ -281,6 +297,7 @@ export const lessons = [
     theme: 'pink',
     number: '17',
     videoUrl: '',
+    pdfUrl: '/pdfs/17-reading-writing-files.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files',
     docsSection: '7.2. Reading and Writing Files',
     topics: ['open()', 'read()', 'write()', 'with statement']
@@ -299,6 +316,7 @@ export const lessons = [
     theme: 'orange',
     number: '18',
     videoUrl: '',
+    pdfUrl: '/pdfs/18-errors-exceptions.pdf',
     docsUrl: 'https://docs.python.org/3/tutorial/errors.html',
     docsSection: '8. Errors and Exceptions',
     topics: ['try', 'except', 'finally', 'raise']
@@ -317,6 +335,7 @@ export const lessons = [
     theme: 'blue',
     number: '19',
     videoUrl: '',
+    pdfUrl: '/pdfs/19-project-calculator.pdf',
     docsUrl: '',
     docsSection: '',
     topics: ['functions', 'conditionals', 'user input']
@@ -333,6 +352,7 @@ export const lessons = [
     theme: 'yellow',
     number: '20',
     videoUrl: '',
+    pdfUrl: '/pdfs/20-project-guessing-game.pdf',
     docsUrl: '',
     docsSection: '',
     topics: ['loops', 'random', 'user input', 'conditionals']

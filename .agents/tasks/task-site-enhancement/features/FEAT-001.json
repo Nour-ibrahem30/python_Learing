@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "SEO and static assets: Add Open Graph/Twitter meta tags to index.html, create robots.txt and sitemap.xml, add PDF download links to lessons",
+  "status": "completed",
+  "steps": [
+    "In index.html: Add Open Graph meta tags (og:title='بايثون مع نوار — تعلم Python بالفيديو', og:description, og:image='/favicon.svg', og:url) and Twitter Card tags (twitter:card='summary_large_image', twitter:title, twitter:description). Add canonical URL link tag.",
+    "Create public/robots.txt with User-agent: * Allow: / and Sitemap directive pointing to sitemap.xml",
+    "Create public/sitemap.xml with basic structure listing /, /lessons, and /lesson/:slug for each lesson from lessons.js",
+    "In src/data/lessons.js: Add pdfUrl field to each lesson object. Use pattern '/pdfs/{number}-{slug}.pdf' (e.g., '/pdfs/01-whetting-appetite.pdf'). PDF files already exist in public/pdfs/.",
+    "In src/pages/LessonPage.jsx: Add a PDF download button in the lesson hero section. Label: 'حمّل الـ PDF'. Use an anchor tag with download attribute. Add a download icon (📥 or SVG). Only show if lesson.pdfUrl exists.",
+    "In src/pages/LessonPage.css: Style .pdf-download-btn with existing button patterns: background var(--blue), white text, border-radius var(--radius-sm), hover effect. Add icon spacing."
+  ],
+  "acceptance_criteria": [
+    "index.html contains og:title, og:description, og:image, og:url, twitter:card, twitter:title, twitter:description, and canonical link",
+    "public/robots.txt exists and is valid",
+    "public/sitemap.xml exists with proper XML structure",
+    "Every lesson object in lessons.js has a pdfUrl field",
+    "LessonPage shows a styled 'حمّل الـ PDF' button for lessons with PDFs",
+    "npm run build completes successfully"
+  ],
+  "verification": [
+    "npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": "All steps completed: Added OG/Twitter meta tags to index.html, created robots.txt and sitemap.xml in public/, added pdfUrl field to all 20 lessons in lessons.js, added PDF download button with styling to LessonPage."
+}
