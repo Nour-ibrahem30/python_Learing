@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { VideoPlayer } from '../components/common/VideoPlayer';
+import { ProtectedVideo } from '../components/common/ProtectedVideo';
 import { getLessonBySlug, getAdjacentLessons, getRelatedLessons } from '../data/lessons';
 import { getDocsForLesson } from '../data/docs';
 import { useProgress } from '../hooks/useProgress';
@@ -276,10 +277,12 @@ export function LessonPage() {
         <section className="lesson-content">
           <div className="container">
             <div className="video-section">
-              <VideoPlayer 
-                cloudinaryId={lesson.cloudinaryId} 
-                videoUrl={lesson.videoUrl} 
-              />
+              <ProtectedVideo lessonTitle={lesson.titleAr}>
+                <VideoPlayer 
+                  cloudinaryId={lesson.cloudinaryId} 
+                  videoUrl={lesson.videoUrl} 
+                />
+              </ProtectedVideo>
             </div>
 
             {/* Documentation Section */}

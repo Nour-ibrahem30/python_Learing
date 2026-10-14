@@ -1,136 +1,122 @@
-import { supabase, supabaseAdmin } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { AppError, asyncHandler } from '../middleware/errorHandler.js';
 
-// Helper: Set token cookie
-const sendTokenCookie = (res, token) => {
+// Helper: Set student ID cookie
+const sendStudentCookie = (res, studentId) => {
   const cookieOptions = {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
   };
-  res.cookie('token', token, cookieOptions);
+  res.cookie('studentId', studentId, cookieOptions);
 };
 
-// Helper: Clear token cookie
-const clearTokenCookie = (res) => {
-  res.cookie('token', 'logged_out', {
+// Helper: Clear student ID cookie
+const clearStudentCookie = (res) => {
+  res.cookie('studentId', 'logged_out', {
     expires: new Date(Date.now() + 10 * 1000), // 10 seconds
     httpOnly: true,
   });
 };
 
 // ==========================================
-// Register
+// Register with Code + PIN
 // ==========================================
 export const register = asyncHandler(async (req, res, next) => {
-  const { email, password, name } = req.body;
+  const { code, pin, name } = req.body;
 
-  // Sign up with Supabase Auth
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        name,
-      },
-    },
-  });
-
-  if (error) {
-    // Check for duplicate email
-    if (error.message.includes('already registered')) {
-      return next(new AppError('الإيميل ده مسجل قبل كده', 400));
-    }
-    return next(new AppError(error.message, 400));
+  if (!code || !pin || !name) {
+    return next(new AppError('لازم تملى كل البيانات', 400));
   }
 
-  const { user: authUser, session } = data;
-
-  // The trigger will create the user profile automatically
-  // Wait a moment for the trigger to execute
-  await new Promise(resolve => setTimeout(resolve, 100));
-
-  // Get the created user profile
-  const { data: user } = await supabaseAdmin
-    .from('users')
-    .select('id, email, name, avatar_url, role, created_at')
-    .eq('id', authUser.id)
+  // Check if code already exists
+  const { data: existing } = await supabaseAdmin
+    .from('students')
+    .select('id')
+    .eq('code', code.toUpperCase())
     .single();
 
-  const token = session?.access_token;
-  if (token) {
-    sendTokenCookie(res, token);
+  if (existing) {
+    return next(new AppError('الكود ده مسجل قبل كده', 400));
   }
+
+  // Create new student
+  const { data: student, error } = await supabaseAdmin
+    .from('students')
+    .insert({
+      code: code.toUpperCase(),
+      name,
+      pin,
+      role: 'USER',
+    })
+    .select()
+    .single();
+
+  if (error) {
+    return next(new AppError('حصل مشكلة في التسجيل', 500));
+  }
+
+  sendStudentCookie(res, student.id);
 
   res.status(201).json({
     status: 'success',
     message: 'تم التسجيل بنجاح! 🎉',
-    token,
-    user: user ? {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      role: user.role,
-      createdAt: user.created_at,
-    } : {
-      id: authUser.id,
-      email: authUser.email,
-      name: name,
-      avatarUrl: null,
-      role: 'USER',
+    studentId: student.id,
+    user: {
+      id: student.id,
+      code: student.code,
+      name: student.name,
+      role: student.role,
+      createdAt: student.created_at,
     },
   });
 });
 
 // ==========================================
-// Login
+// Login with Code + PIN
 // ==========================================
 export const login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { code, pin } = req.body;
 
-  // Sign in with Supabase Auth
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return next(new AppError('الإيميل أو الباسورد غلط', 401));
+  if (!code || !pin) {
+    return next(new AppError('لازم تكتب الكود والرمز', 400));
   }
 
-  const { user: authUser, session } = data;
+  // Find student by code
+  const { data: student, error } = await supabaseAdmin
+    .from('students')
+    .select('*')
+    .eq('code', code.toUpperCase())
+    .single();
+
+  if (error || !student) {
+    return next(new AppError('الكود أو الرمز غلط', 401));
+  }
+
+  // Verify PIN
+  if (student.pin !== pin) {
+    return next(new AppError('الكود أو الرمز غلط', 401));
+  }
 
   // Update last login
   await supabaseAdmin
-    .from('users')
+    .from('students')
     .update({ last_login: new Date().toISOString() })
-    .eq('id', authUser.id);
+    .eq('id', student.id);
 
-  // Get user profile
-  const { data: user } = await supabaseAdmin
-    .from('users')
-    .select('id, email, name, avatar_url, role')
-    .eq('id', authUser.id)
-    .single();
-
-  const token = session.access_token;
-  sendTokenCookie(res, token);
+  sendStudentCookie(res, student.id);
 
   res.json({
     status: 'success',
     message: 'تم تسجيل الدخول! 👋',
-    token,
-    user: user ? {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      role: user.role,
-    } : {
-      id: authUser.id,
-      email: authUser.email,
+    studentId: student.id,
+    user: {
+      id: student.id,
+      code: student.code,
+      name: student.name,
+      role: student.role,
+      createdAt: student.created_at,
     },
   });
 });
@@ -139,9 +125,7 @@ export const login = asyncHandler(async (req, res, next) => {
 // Logout
 // ==========================================
 export const logout = asyncHandler(async (req, res) => {
-  // Sign out from Supabase
-  await supabase.auth.signOut();
-  clearTokenCookie(res);
+  clearStudentCookie(res);
 
   res.json({
     status: 'success',
@@ -153,38 +137,32 @@ export const logout = asyncHandler(async (req, res) => {
 // Get Current User
 // ==========================================
 export const getMe = asyncHandler(async (req, res) => {
-  // Get user with relation counts using admin client
-  const { data: user } = await supabaseAdmin
-    .from('users')
-    .select('id, email, name, avatar_url, role, created_at, last_login')
+  // Get student with relation counts using admin client
+  const { data: student } = await supabaseAdmin
+    .from('students')
+    .select('id, code, name, role, created_at, last_login')
     .eq('id', req.user.id)
     .single();
 
   // Get counts separately
-  const [progressCount, commentsCount] = await Promise.all([
+  const [progressCount] = await Promise.all([
     supabaseAdmin
       .from('lesson_progress')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', req.user.id),
-    supabaseAdmin
-      .from('comments')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', req.user.id),
+      .eq('student_id', req.user.id),
   ]);
 
   res.json({
     status: 'success',
     user: {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      role: user.role,
-      createdAt: user.created_at,
-      lastLogin: user.last_login,
+      id: student.id,
+      code: student.code,
+      name: student.name,
+      role: student.role,
+      createdAt: student.created_at,
+      lastLogin: student.last_login,
       _count: {
         progress: progressCount.count || 0,
-        comments: commentsCount.count || 0,
       },
     },
   });
@@ -194,16 +172,13 @@ export const getMe = asyncHandler(async (req, res) => {
 // Update Profile
 // ==========================================
 export const updateProfile = asyncHandler(async (req, res, _next) => {
-  const { name, avatarUrl } = req.body;
+  const { name } = req.body;
 
-  const { data: user, error } = await supabaseAdmin
-    .from('users')
-    .update({
-      name,
-      avatar_url: avatarUrl,
-    })
+  const { data: student, error } = await supabaseAdmin
+    .from('students')
+    .update({ name })
     .eq('id', req.user.id)
-    .select('id, email, name, avatar_url, role')
+    .select('id, code, name, role')
     .single();
 
   if (error) {
@@ -214,48 +189,43 @@ export const updateProfile = asyncHandler(async (req, res, _next) => {
     status: 'success',
     message: 'تم تحديث الملف الشخصي! ✨',
     user: {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      role: user.role,
+      id: student.id,
+      code: student.code,
+      name: student.name,
+      role: student.role,
     },
   });
 });
 
 // ==========================================
-// Change Password
+// Change PIN
 // ==========================================
 export const changePassword = asyncHandler(async (req, res, next) => {
-  const { currentPassword, newPassword } = req.body;
+  const { currentPassword: currentPin, newPassword: newPin } = req.body;
 
-  // First verify current password by attempting to sign in
-  const { error: verifyError } = await supabase.auth.signInWithPassword({
-    email: req.user.email,
-    password: currentPassword,
-  });
+  // Verify current PIN
+  const { data: student } = await supabaseAdmin
+    .from('students')
+    .select('pin')
+    .eq('id', req.user.id)
+    .single();
 
-  if (verifyError) {
-    return next(new AppError('الباسورد الحالي غلط', 401));
+  if (!student || student.pin !== currentPin) {
+    return next(new AppError('الرمز الحالي غلط', 401));
   }
 
-  // Update password using Supabase Auth
-  const { data, error } = await supabase.auth.updateUser({
-    password: newPassword,
-  });
+  // Update PIN
+  const { error } = await supabaseAdmin
+    .from('students')
+    .update({ pin: newPin })
+    .eq('id', req.user.id);
 
   if (error) {
-    return next(new AppError('فشل تغيير الباسورد', 500));
-  }
-
-  const token = data.session?.access_token;
-  if (token) {
-    sendTokenCookie(res, token);
+    return next(new AppError('فشل تغيير الرمز', 500));
   }
 
   res.json({
     status: 'success',
-    message: 'تم تغيير الباسورد! 🔐',
-    token,
+    message: 'تم تغيير الرمز! 🔐',
   });
 });

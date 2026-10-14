@@ -1,0 +1,7 @@
+{
+  "task_id": "task-supabase-migration",
+  "task_description": "Migrate backend from Prisma + PostgreSQL to Supabase (@supabase/supabase-js), and update frontend auth to use Supabase Auth directly. Preserve existing REST API structure for backward compatibility.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

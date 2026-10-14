@@ -1,7 +1,7 @@
 {
   "task_id": "task-site-enhancement",
-  "task_description": "Major enhancement to the Python learning platform: add SEO, dark mode, progress tracking, enhanced About, 404 page, PDF links, Cloudinary prep, and backend scaffolding",
-  "status": "completed",
-  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "task_description": "Enhance animations and layout for the Python-learning platform using Framer Motion. Add floating animations, gradient effects, parallax scrolling, typing animations, confetti celebrations, and scroll-triggered effects across all sections while respecting prefers-reduced-motion and maintaining 60fps performance.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004", "FEAT-005", "FEAT-006"],
   "blocked_reason": null
 }

@@ -1,90 +1,78 @@
-import { supabase, supabaseAdmin } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { AppError, asyncHandler } from './errorHandler.js';
 
 // Protect routes - require authentication
+// Uses student ID from Authorization header (sent by frontend from localStorage)
 export const protect = asyncHandler(async (req, res, next) => {
-  let token;
+  let studentId;
 
-  // Check for token in header or cookies
+  // Check for student ID in header or cookies
   if (req.headers.authorization?.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies?.token) {
-    token = req.cookies.token;
+    studentId = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies?.studentId) {
+    studentId = req.cookies.studentId;
   }
 
-  if (!token) {
+  if (!studentId) {
     return next(new AppError('لازم تسجل دخول الأول', 401));
   }
 
   try {
-    // Verify token with Supabase
-    const { data: { user: authUser }, error } = await supabase.auth.getUser(token);
-
-    if (error || !authUser) {
-      return next(new AppError('Token مش صالح. سجل دخول تاني.', 401));
-    }
-
-    // Get user profile from database using admin client to bypass RLS
-    const { data: user, error: userError } = await supabaseAdmin
-      .from('users')
-      .select('id, email, name, avatar_url, role, is_verified')
-      .eq('id', authUser.id)
+    // Get student from database using admin client to bypass RLS
+    const { data: student, error } = await supabaseAdmin
+      .from('students')
+      .select('id, code, name, role, created_at, last_login')
+      .eq('id', studentId)
       .single();
 
-    if (userError || !user) {
+    if (error || !student) {
       return next(new AppError('المستخدم ده مش موجود', 401));
     }
 
     // Attach user to request with camelCase mapping
     req.user = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      role: user.role,
-      isVerified: user.is_verified,
+      id: student.id,
+      code: student.code,
+      name: student.name,
+      role: student.role,
+      createdAt: student.created_at,
+      lastLogin: student.last_login,
     };
     next();
   } catch (_error) {
-    return next(new AppError('Token مش صالح. سجل دخول تاني.', 401));
+    return next(new AppError('حدث خطأ. سجل دخول تاني.', 401));
   }
 });
 
-// Optional auth - attach user if token exists, but don't require it
+// Optional auth - attach user if student ID exists, but don't require it
 export const optionalAuth = asyncHandler(async (req, res, next) => {
-  let token;
+  let studentId;
 
   if (req.headers.authorization?.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies?.token) {
-    token = req.cookies.token;
+    studentId = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies?.studentId) {
+    studentId = req.cookies.studentId;
   }
 
-  if (token) {
+  if (studentId) {
     try {
-      // Verify token with Supabase
-      const { data: { user: authUser }, error } = await supabase.auth.getUser(token);
+      // Get student from database using admin client
+      const { data: student } = await supabaseAdmin
+        .from('students')
+        .select('id, code, name, role')
+        .eq('id', studentId)
+        .single();
 
-      if (!error && authUser) {
-        // Get user profile from database using admin client
-        const { data: user } = await supabaseAdmin
-          .from('users')
-          .select('id, email, name, avatar_url, role')
-          .eq('id', authUser.id)
-          .single();
-
-        if (user) {
-          req.user = {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            avatarUrl: user.avatar_url,
-            role: user.role,
-          };
-        }
+      if (student) {
+        req.user = {
+          id: student.id,
+          code: student.code,
+          name: student.name,
+          role: student.role,
+        };
       }
     } catch (_error) {
-      // Token invalid, but that's okay for optional auth
+      // ID invalid, but that's okay for optional auth
       req.user = null;
     }
   }

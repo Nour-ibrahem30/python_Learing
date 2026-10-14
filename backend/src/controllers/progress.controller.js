@@ -8,7 +8,7 @@ export const getProgress = asyncHandler(async (req, res) => {
   const { data: progress, error } = await supabaseAdmin
     .from('lesson_progress')
     .select('*')
-    .eq('user_id', req.user.id)
+    .eq('student_id', req.user.id)
     .order('started_at', { ascending: false });
 
   if (error) {
@@ -18,7 +18,7 @@ export const getProgress = asyncHandler(async (req, res) => {
   // Map to camelCase
   const mappedProgress = (progress || []).map(p => ({
     id: p.id,
-    userId: p.user_id,
+    studentId: p.student_id,
     lessonSlug: p.lesson_slug,
     status: p.status,
     progressPercent: p.progress_percent,
@@ -49,7 +49,7 @@ export const getLessonProgress = asyncHandler(async (req, res) => {
   const { data: progress } = await supabaseAdmin
     .from('lesson_progress')
     .select('*')
-    .eq('user_id', req.user.id)
+    .eq('student_id', req.user.id)
     .eq('lesson_slug', lessonSlug)
     .single();
 
@@ -57,7 +57,7 @@ export const getLessonProgress = asyncHandler(async (req, res) => {
     status: 'success',
     progress: progress ? {
       id: progress.id,
-      userId: progress.user_id,
+      studentId: progress.student_id,
       lessonSlug: progress.lesson_slug,
       status: progress.status,
       progressPercent: progress.progress_percent,
@@ -87,14 +87,14 @@ export const updateProgress = asyncHandler(async (req, res) => {
     .from('lesson_progress')
     .upsert(
       {
-        user_id: req.user.id,
+        student_id: req.user.id,
         lesson_slug: lessonSlug,
         status: progressStatus,
         progress_percent: progressPercent || 0,
         completed_at: completedAt,
       },
       {
-        onConflict: 'user_id,lesson_slug',
+        onConflict: 'student_id,lesson_slug',
       }
     )
     .select()
@@ -109,7 +109,7 @@ export const updateProgress = asyncHandler(async (req, res) => {
     message: 'تم حفظ التقدم! 📈',
     progress: {
       id: progress.id,
-      userId: progress.user_id,
+      studentId: progress.student_id,
       lessonSlug: progress.lesson_slug,
       status: progress.status,
       progressPercent: progress.progress_percent,
@@ -129,14 +129,14 @@ export const markCompleted = asyncHandler(async (req, res) => {
     .from('lesson_progress')
     .upsert(
       {
-        user_id: req.user.id,
+        student_id: req.user.id,
         lesson_slug: lessonSlug,
         status: 'COMPLETED',
         progress_percent: 100,
         completed_at: new Date().toISOString(),
       },
       {
-        onConflict: 'user_id,lesson_slug',
+        onConflict: 'student_id,lesson_slug',
       }
     )
     .select()
@@ -151,7 +151,7 @@ export const markCompleted = asyncHandler(async (req, res) => {
     message: 'برافو! خلصت الدرس 🎉',
     progress: {
       id: progress.id,
-      userId: progress.user_id,
+      studentId: progress.student_id,
       lessonSlug: progress.lesson_slug,
       status: progress.status,
       progressPercent: progress.progress_percent,
@@ -172,7 +172,7 @@ export const updateWatchHistory = asyncHandler(async (req, res) => {
   const { data: existing } = await supabaseAdmin
     .from('watch_history')
     .select('watch_time')
-    .eq('user_id', req.user.id)
+    .eq('student_id', req.user.id)
     .eq('lesson_slug', lessonSlug)
     .single();
 
@@ -185,7 +185,7 @@ export const updateWatchHistory = asyncHandler(async (req, res) => {
         watch_time: (existing.watch_time || 0) + (watchTime || 0),
         last_position: lastPosition || 0,
       })
-      .eq('user_id', req.user.id)
+      .eq('student_id', req.user.id)
       .eq('lesson_slug', lessonSlug)
       .select()
       .single();
@@ -197,7 +197,7 @@ export const updateWatchHistory = asyncHandler(async (req, res) => {
     const { data, error } = await supabaseAdmin
       .from('watch_history')
       .insert({
-        user_id: req.user.id,
+        student_id: req.user.id,
         lesson_slug: lessonSlug,
         watch_time: watchTime || 0,
         last_position: lastPosition || 0,
@@ -213,7 +213,7 @@ export const updateWatchHistory = asyncHandler(async (req, res) => {
     status: 'success',
     history: {
       id: history.id,
-      userId: history.user_id,
+      studentId: history.student_id,
       lessonSlug: history.lesson_slug,
       watchTime: history.watch_time,
       lastPosition: history.last_position,
@@ -231,7 +231,7 @@ export const getWatchHistory = asyncHandler(async (req, res) => {
   const { data: history } = await supabaseAdmin
     .from('watch_history')
     .select('*')
-    .eq('user_id', req.user.id)
+    .eq('student_id', req.user.id)
     .eq('lesson_slug', lessonSlug)
     .single();
 
@@ -239,7 +239,7 @@ export const getWatchHistory = asyncHandler(async (req, res) => {
     status: 'success',
     history: history ? {
       id: history.id,
-      userId: history.user_id,
+      studentId: history.student_id,
       lessonSlug: history.lesson_slug,
       watchTime: history.watch_time,
       lastPosition: history.last_position,

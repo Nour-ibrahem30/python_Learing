@@ -34,7 +34,7 @@ export const getLessons = asyncHandler(async (req, res) => {
     const { data: progress } = await supabaseAdmin
       .from('lesson_progress')
       .select('lesson_slug, status, progress_percent')
-      .eq('user_id', req.user.id);
+      .eq('student_id', req.user.id);
     userProgress = progress || [];
   }
 
@@ -100,13 +100,13 @@ export const getLesson = asyncHandler(async (req, res) => {
       supabaseAdmin
         .from('lesson_progress')
         .select('*')
-        .eq('user_id', req.user.id)
+        .eq('student_id', req.user.id)
         .eq('lesson_slug', slug)
         .single(),
       supabaseAdmin
         .from('watch_history')
         .select('*')
-        .eq('user_id', req.user.id)
+        .eq('student_id', req.user.id)
         .eq('lesson_slug', slug)
         .single(),
     ]);
@@ -166,7 +166,7 @@ export const trackVisit = asyncHandler(async (req, res) => {
   await supabaseAdmin
     .from('site_visits')
     .insert({
-      user_id: req.user?.id || null,
+      student_id: req.user?.id || null,
       page_path: pagePath,
       user_agent: req.headers['user-agent'],
       ip_address: req.ip,

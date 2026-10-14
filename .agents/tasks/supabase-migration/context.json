@@ -1,0 +1,46 @@
+{
+  "project_type": "Full-stack learning platform - Express.js backend + React frontend (Vite)",
+  "language": "JavaScript (ES Modules)",
+  "build_system": "npm with separate frontend/backend packages, Vite for frontend",
+  "test_framework": "No test framework configured",
+  "build_command": "npm install (in backend and frontend directories)",
+  "test_command": "Manual verification - no automated tests",
+  "verification_instructions": "1. Install dependencies: npm install in backend folder. 2. Start backend: npm run dev. 3. Check health endpoint: GET http://localhost:5000/api/health. 4. For frontend: npm install && npm run dev",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Backend requires .env file with Supabase credentials. Frontend dev server on :5173, backend on :5000",
+  "contribution_requirements": "Arabic comments welcomed. Keep REST API structure compatible",
+  "key_patterns": {
+    "controllers": "Export async functions wrapped with asyncHandler(), use res.json() with { status, message, data }",
+    "middleware": "auth.js exports protect, optionalAuth, restrictTo, adminOnly - verify Supabase JWT and attach user to req",
+    "database": "All Prisma calls import prisma from ../config/database.js - replace with Supabase client",
+    "error_handling": "AppError class for operational errors, asyncHandler wrapper for async routes",
+    "frontend_auth": "AuthContext.jsx manages user state, stores JWT in localStorage, calls /api/auth/* endpoints"
+  },
+  "relevant_files": [
+    "backend/src/config/database.js",
+    "backend/src/middleware/auth.js",
+    "backend/src/controllers/auth.controller.js",
+    "backend/src/controllers/admin.controller.js",
+    "backend/src/controllers/lesson.controller.js",
+    "backend/src/controllers/progress.controller.js",
+    "backend/src/routes/user.routes.js",
+    "backend/src/utils/jwt.js",
+    "backend/prisma/schema.prisma",
+    "backend/prisma/seed.js",
+    "backend/package.json",
+    "backend/.env.example",
+    "frontend/src/context/AuthContext.jsx",
+    "frontend/src/services/api.js",
+    "frontend/package.json"
+  ],
+  "directory_structure": {
+    "backend/src/config": "Database and Cloudinary config",
+    "backend/src/controllers": "Route handlers with business logic",
+    "backend/src/middleware": "Auth, error handler, validation middleware",
+    "backend/src/routes": "Express Router definitions",
+    "backend/src/utils": "JWT utilities",
+    "backend/prisma": "Prisma schema and seed file",
+    "frontend/src/context": "React contexts including AuthContext",
+    "frontend/src/services": "API service layer"
+  }
+}

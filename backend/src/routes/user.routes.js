@@ -4,18 +4,18 @@ import { asyncHandler } from '../middleware/errorHandler.js';
 
 const router = Router();
 
-// Get user public profile
-router.get('/:userId', asyncHandler(async (req, res) => {
-  const { userId } = req.params;
+// Get student public profile
+router.get('/:studentId', asyncHandler(async (req, res) => {
+  const { studentId } = req.params;
 
-  // Get user profile
-  const { data: user, error } = await supabaseAdmin
-    .from('users')
-    .select('id, name, avatar_url, created_at')
-    .eq('id', userId)
+  // Get student profile
+  const { data: student, error } = await supabaseAdmin
+    .from('students')
+    .select('id, name, created_at')
+    .eq('id', studentId)
     .single();
 
-  if (error || !user) {
+  if (error || !student) {
     return res.status(404).json({
       status: 'fail',
       message: 'المستخدم مش موجود',
@@ -26,16 +26,15 @@ router.get('/:userId', asyncHandler(async (req, res) => {
   const { count: completedLessons } = await supabaseAdmin
     .from('lesson_progress')
     .select('*', { count: 'exact', head: true })
-    .eq('user_id', userId)
+    .eq('student_id', studentId)
     .eq('status', 'COMPLETED');
 
   res.json({
     status: 'success',
     user: {
-      id: user.id,
-      name: user.name,
-      avatarUrl: user.avatar_url,
-      createdAt: user.created_at,
+      id: student.id,
+      name: student.name,
+      createdAt: student.created_at,
       completedLessons: completedLessons || 0,
     },
   });

@@ -1,6 +1,6 @@
 /**
- * Authentication Context using Supabase
- * Provides authentication state and functions throughout the application.
+ * Authentication Context using Code + PIN system
+ * بدل Email - الطالب بيسجل بكود ورمز
  */
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
@@ -15,74 +15,69 @@ export function AuthProvider({ children }) {
 
   // Check for existing session on mount
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email,
-          name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
-          role: session.user.user_metadata?.role || 'USER',
-          createdAt: session.user.created_at,
-        });
-        setIsAuthenticated(true);
+    const checkSession = async () => {
+      // Check localStorage for saved user
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser);
+          setUser(userData);
+          setIsAuthenticated(true);
+        } catch (e) {
+          localStorage.removeItem('user');
+        }
       }
       setIsLoading(false);
-    });
+    };
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          setUser({
-            id: session.user.id,
-            email: session.user.email,
-            name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
-            role: session.user.user_metadata?.role || 'USER',
-            createdAt: session.user.created_at,
-          });
-          setIsAuthenticated(true);
-        } else {
-          setUser(null);
-          setIsAuthenticated(false);
-        }
-        setIsLoading(false);
-      }
-    );
-
-    return () => subscription.unsubscribe();
+    checkSession();
   }, []);
 
   /**
-   * Login user with email and password
+   * Login user with code and PIN
    */
-  const login = useCallback(async (email, password) => {
+  const login = useCallback(async (code, pin) => {
     setIsLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Find user by code
+      const { data: users, error } = await supabase
+        .from('students')
+        .select('*')
+        .eq('code', code.toUpperCase())
+        .single();
 
-      if (error) {
-        console.error('Login error:', error.message);
+      if (error || !users) {
+        console.error('Login error: User not found');
         return false;
       }
 
-      if (data.user) {
-        setUser({
-          id: data.user.id,
-          email: data.user.email,
-          name: data.user.user_metadata?.name || data.user.email?.split('@')[0],
-          role: data.user.user_metadata?.role || 'USER',
-          createdAt: data.user.created_at,
-        });
-        setIsAuthenticated(true);
-        return true;
+      // Check PIN
+      if (users.pin !== pin) {
+        console.error('Login error: Wrong PIN');
+        return false;
       }
 
-      return false;
+      // Update last login
+      await supabase
+        .from('students')
+        .update({ last_login: new Date().toISOString() })
+        .eq('id', users.id);
+
+      const userData = {
+        id: users.id,
+        code: users.code,
+        name: users.name,
+        role: users.role || 'USER',
+        createdAt: users.created_at,
+      };
+
+      // Save to localStorage
+      localStorage.setItem('user', JSON.stringify(userData));
+      
+      setUser(userData);
+      setIsAuthenticated(true);
+      return true;
     } catch (error) {
       console.error('Login error:', error);
       return false;
@@ -98,7 +93,7 @@ export function AuthProvider({ children }) {
     setIsLoading(true);
     
     try {
-      await supabase.auth.signOut();
+      localStorage.removeItem('user');
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
@@ -109,47 +104,55 @@ export function AuthProvider({ children }) {
   }, []);
 
   /**
-   * Register new user
+   * Register new user with code and PIN
    */
-  const register = useCallback(async (name, email, password) => {
+  const register = useCallback(async (name, code, pin) => {
     setIsLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name: name,
-            role: 'USER',
-          },
-        },
-      });
+      // Check if code already exists
+      const { data: existing } = await supabase
+        .from('students')
+        .select('id')
+        .eq('code', code.toUpperCase())
+        .single();
 
-      if (error) {
-        console.error('Register error:', error.message);
+      if (existing) {
+        console.error('Register error: Code already exists');
         return false;
       }
 
-      if (data.user) {
-        // Check if email confirmation is required
-        if (data.user.identities?.length === 0) {
-          // Email already registered
-          return false;
-        }
-        
-        setUser({
-          id: data.user.id,
-          email: data.user.email,
+      // Create new student
+      const { data: newUser, error } = await supabase
+        .from('students')
+        .insert({
+          code: code.toUpperCase(),
           name: name,
+          pin: pin,
           role: 'USER',
-          createdAt: data.user.created_at,
-        });
-        setIsAuthenticated(true);
-        return true;
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Register error:', error);
+        return false;
       }
 
-      return false;
+      const userData = {
+        id: newUser.id,
+        code: newUser.code,
+        name: newUser.name,
+        role: newUser.role || 'USER',
+        createdAt: newUser.created_at,
+      };
+
+      // Save to localStorage
+      localStorage.setItem('user', JSON.stringify(userData));
+      
+      setUser(userData);
+      setIsAuthenticated(true);
+      return true;
     } catch (error) {
       console.error('Register error:', error);
       return false;
