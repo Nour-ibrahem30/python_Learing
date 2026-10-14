@@ -1,0 +1,53 @@
+footer {
+  max-width: 1180px;
+  margin: auto;
+  border-top: 1px solid var(--line);
+  padding: 28px 0 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #74796c;
+}
+
+footer .brand {
+  font-size: 16px;
+}
+
+footer .mark {
+  font-size: 18px;
+}
+
+footer .made-by {
+  font-size: 11px;
+  color: #a0a89a;
+  letter-spacing: 0.03em;
+}
+
+footer .made-by b {
+  color: #74796c;
+  font-weight: 600;
+}
+
+footer a:last-child {
+  transition: color var(--transition-fast);
+}
+
+footer a:last-child:hover {
+  color: var(--blue);
+}
+
+@media (max-width: 700px) {
+  footer {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 25px 0;
+    margin-inline: 24px;
+  }
+  
+  footer p {
+    width: 100%;
+    order: 3;
+    margin: 0;
+  }
+}

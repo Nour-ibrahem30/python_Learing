@@ -1,0 +1,223 @@
+/* ================================
+   Lesson Card
+   ================================ */
+
+.lesson {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e2e4db;
+  border-radius: 14px;
+  overflow: hidden;
+  color: var(--ink);
+  cursor: pointer;
+  height: 100%;
+  text-align: right;
+  transition:
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.lesson:hover {
+  border-color: #c8cbbf;
+  box-shadow:
+    inset 0 3px 0 var(--accent, var(--blue)),
+    0 10px 36px rgba(0, 0, 0, 0.09),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Thumbnail ───────────────────── */
+
+.thumbnail {
+  height: 172px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.thumbnail.blue   { background: #dce8f5; color: #1d4373; }
+.thumbnail.yellow { background: #f7e7ad; color: #5d4a18; }
+.thumbnail.purple { background: #e4dff0; color: #5a4580; }
+.thumbnail.green  { background: #dde8da; color: #3a5e39; }
+.thumbnail.pink   { background: #ecdde3; color: #6e4b61; }
+.thumbnail.orange { background: #efe0d2; color: #7d5836; }
+
+/* macOS-style editor titlebar */
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 13px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.win-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.code-filename {
+  flex: 1;
+  font-size: 9.5px;
+  font-family: 'Space Grotesk', monospace;
+  opacity: 0.5;
+  letter-spacing: 0.4px;
+  margin-left: 7px;
+}
+
+.card-num {
+  font-size: 9px;
+  font-family: 'Space Grotesk', monospace;
+  opacity: 0.45;
+  letter-spacing: 1.2px;
+}
+
+.code-preview {
+  position: relative;
+  z-index: 1;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.72;
+  margin: 0;
+  padding: 11px 15px 0;
+  font-family: 'Space Grotesk', monospace;
+}
+
+.thumb-symbol {
+  position: absolute;
+  right: 12px;
+  bottom: 2px;
+  font: 700 78px 'Space Grotesk', monospace;
+  opacity: 0.07;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Card Body ───────────────────── */
+
+.lesson-body {
+  padding: 15px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.lesson-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.lesson-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.3px;
+}
+
+/* Video availability pill */
+.video-pill {
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+}
+
+.video-pill.available {
+  background: #e0f0e7;
+  color: #1b6437;
+}
+
+.video-pill.soon {
+  background: #eeeeeb;
+  color: #8a8c81;
+}
+
+/* Title */
+.lesson h3 {
+  font-size: 16.5px;
+  margin: 0 0 5px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+}
+
+/* Description */
+.lesson-desc {
+  font-size: 12px;
+  color: #797e71;
+  margin: 0;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Topic chips */
+.topic-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.topic-chip {
+  font-size: 9.5px;
+  padding: 2px 8px;
+  background: #f3f4ef;
+  border: 1px solid #e3e5dc;
+  border-radius: 20px;
+  color: #636e5e;
+  font-family: 'Space Grotesk', monospace;
+}
+
+/* Card footer row */
+.lesson-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eceee5;
+  margin-top: auto;
+  padding-top: 11px;
+  margin-block-start: 14px;
+}
+
+.lesson-index {
+  font-size: 10.5px;
+  color: #b2b8aa;
+  font-family: 'Space Grotesk', monospace;
+  font-weight: 500;
+}
+
+.lesson-cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #474e42;
+  transition: color 0.15s ease;
+}
+
+.lesson:hover .lesson-cta {
+  color: var(--accent, var(--blue));
+}
+
+/* ── Responsive ──────────────────── */
+
+@media (min-width: 1450px) {
+  .thumbnail    { height: 188px; }
+  .code-preview { font-size: 13px; }
+}
+
+@media (max-width: 1000px) {
+  .code-preview { font-size: 11.5px; }
+}
+
+@media (max-width: 700px) {
+  .thumbnail    { height: 162px; }
+  .code-preview { font-size: 14px; }
+  .lesson h3    { font-size: 18px; }
+}

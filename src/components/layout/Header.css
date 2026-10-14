@@ -1,0 +1,124 @@
+.nav {
+  height: 106px;
+  max-width: 1260px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 21px;
+}
+
+.brand b {
+  font-weight: 500;
+}
+
+.mark {
+  background: var(--blue);
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 24px;
+  padding: 6px 10px;
+  direction: ltr;
+  font-family: 'Space Grotesk', monospace;
+}
+
+.mark span {
+  color: var(--yellow);
+}
+
+.nav nav {
+  display: flex;
+  gap: 34px;
+  font-size: 15px;
+}
+
+.nav nav a {
+  position: relative;
+  padding: 8px 0;
+  transition: color var(--transition-fast);
+}
+
+.nav nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background: var(--blue);
+  transition: width var(--transition-normal);
+}
+
+.nav nav a:hover,
+.nav nav a.active {
+  color: var(--blue);
+}
+
+.nav nav a:hover::after,
+.nav nav a.active::after {
+  width: 100%;
+}
+
+.nav-cta {
+  border: 1px solid #bfc3bc;
+  border-radius: var(--radius-sm);
+  padding: 10px 17px;
+  font-size: 14px;
+  transition: all var(--transition-fast);
+}
+
+.nav-cta:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: white;
+}
+
+.nav-cta span {
+  margin-right: 15px;
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.nav-cta:hover span {
+  transform: translate(-3px, -3px);
+}
+
+@media (max-width: 1000px) {
+  .nav nav {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav {
+    height: 83px;
+    padding: 0 20px;
+  }
+  
+  .brand {
+    font-size: 17px;
+    gap: 9px;
+  }
+  
+  .mark {
+    font-size: 20px;
+  }
+  
+  .nav nav {
+    display: none;
+  }
+  
+  .nav-cta {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}

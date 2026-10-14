@@ -1,0 +1,35 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+}
+
+/* Hide default cursor when custom cursor is active */
+.cursor-active {
+  cursor: none !important;
+}
+
+.cursor-active * {
+  cursor: none !important;
+}
+
+.cursor-active input,
+.cursor-active textarea {
+  cursor: text !important;
+}
+
+/* Touch devices - disable custom cursor */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .custom-cursor {
+    display: none !important;
+  }
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "number": 1,
+    "title": "ليه Python؟ ونبدأ بيها إزاي؟",
+    "slug": "whetting-appetite",
+    "pdf": "01-whetting-appetite.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "whetting-appetite"
+    ],
+    "url": "/pdfs/01-whetting-appetite.pdf"
+  },
+  {
+    "number": 2,
+    "title": "نشغّل Python على جهازك",
+    "slug": "using-interpreter",
+    "pdf": "02-using-interpreter.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "using-interpreter"
+    ],
+    "url": "/pdfs/02-using-interpreter.pdf"
+  },
+  {
+    "number": 3,
+    "title": "المتغيرات والأرقام والنصوص",
+    "slug": "informal-intro",
+    "pdf": "03-informal-intro.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "informal-intro"
+    ],
+    "url": "/pdfs/03-informal-intro.pdf"
+  },
+  {
+    "number": 4,
+    "title": "نخلّي الكود ياخد قرار",
+    "slug": "if-statements",
+    "pdf": "04-if-statements.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "if-statements"
+    ],
+    "url": "/pdfs/04-if-statements.pdf"
+  },
+  {
+    "number": 5,
+    "title": "نكرّر الشغل باستخدام for",
+    "slug": "for-statements",
+    "pdf": "05-for-statements.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "for-statements"
+    ],
+    "url": "/pdfs/05-for-statements.pdf"
+  },
+  {
+    "number": 6,
+    "title": "الأرقام بترتيب باستخدام range",
+    "slug": "range-function",
+    "pdf": "06-range-function.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "range-function"
+    ],
+    "url": "/pdfs/06-range-function.pdf"
+  },
+  {
+    "number": 7,
+    "title": "نوقف التكرار أو نعدّي دورة",
+    "slug": "break-continue",
+    "pdf": "07-break-continue.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "break-continue"
+    ],
+    "url": "/pdfs/07-break-continue.pdf"
+  },
+  {
+    "number": 8,
+    "title": "نكتب دالة ونستخدمها",
+    "slug": "defining-functions",
+    "pdf": "08-defining-functions.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "defining-functions"
+    ],
+    "url": "/pdfs/08-defining-functions.pdf"
+  },
+  {
+    "number": 9,
+    "title": "قيم افتراضية من غير مفاجآت",
+    "slug": "default-arguments",
+    "pdf": "09-default-arguments.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "default-arguments"
+    ],
+    "url": "/pdfs/09-default-arguments.pdf"
+  },
+  {
+    "number": 10,
+    "title": "دالة صغيرة باستخدام lambda",
+    "slug": "lambda-expressions",
+    "pdf": "10-lambda-expressions.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "lambda-expressions"
+    ],
+    "url": "/pdfs/10-lambda-expressions.pdf"
+  },
+  {
+    "number": 11,
+    "title": "نضيف ونعدّل داخل القوائم",
+    "slug": "more-on-lists",
+    "pdf": "11-more-on-lists.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "more-on-lists"
+    ],
+    "url": "/pdfs/11-more-on-lists.pdf"
+  },
+  {
+    "number": 12,
+    "title": "نبني قائمة جديدة بوضوح",
+    "slug": "list-comprehensions",
+    "pdf": "12-list-comprehensions.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "list-comprehensions"
+    ],
+    "url": "/pdfs/12-list-comprehensions.pdf"
+  },
+  {
+    "number": 13,
+    "title": "قيم مع بعض باستخدام tuple",
+    "slug": "tuples-sequences",
+    "pdf": "13-tuples-sequences.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "tuples-sequences"
+    ],
+    "url": "/pdfs/13-tuples-sequences.pdf"
+  },
+  {
+    "number": 14,
+    "title": "العناصر الفريدة باستخدام set",
+    "slug": "sets",
+    "pdf": "14-sets.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "sets"
+    ],
+    "url": "/pdfs/14-sets.pdf"
+  },
+  {
+    "number": 15,
+    "title": "كل معلومة ومعاها اسمها",
+    "slug": "dictionaries",
+    "pdf": "15-dictionaries.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "dictionaries"
+    ],
+    "url": "/pdfs/15-dictionaries.pdf"
+  },
+  {
+    "number": 16,
+    "title": "نعرض النتائج بشكل واضح",
+    "slug": "fancier-output",
+    "pdf": "16-fancier-output.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "fancier-output"
+    ],
+    "url": "/pdfs/16-fancier-output.pdf"
+  },
+  {
+    "number": 17,
+    "title": "نقرأ ونكتب ملفات",
+    "slug": "reading-writing-files",
+    "pdf": "17-reading-writing-files.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "reading-writing-files"
+    ],
+    "url": "/pdfs/17-reading-writing-files.pdf"
+  },
+  {
+    "number": 18,
+    "title": "نقرأ الخطأ ونتعامل معاه",
+    "slug": "errors-exceptions",
+    "pdf": "18-errors-exceptions.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "errors-exceptions"
+    ],
+    "url": "/pdfs/18-errors-exceptions.pdf"
+  },
+  {
+    "number": 19,
+    "title": "نعمل آلة حاسبة صغيرة",
+    "slug": "project-calculator",
+    "pdf": "19-project-calculator.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "project-calculator"
+    ],
+    "url": "/pdfs/19-project-calculator.pdf"
+  },
+  {
+    "number": 20,
+    "title": "نبرمج لعبة تخمين الرقم",
+    "slug": "project-guessing-game",
+    "pdf": "20-project-guessing-game.pdf",
+    "pages": 7,
+    "lesson_ids": [
+      "project-guessing-game"
+    ],
+    "url": "/pdfs/20-project-guessing-game.pdf"
+  }
+]
