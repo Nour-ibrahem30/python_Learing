@@ -1,0 +1,29 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Backend Controllers & Middleware Migration - Replace all Prisma calls with Supabase client calls and update auth middleware to verify Supabase JWTs. Depends on FEAT-001 (Supabase client setup).",
+  "status": "completed",
+  "steps": [
+    "Update backend/src/middleware/auth.js: (a) Remove jwt and prisma imports, (b) Import supabase from config/supabase.js, (c) In protect(): extract token from Authorization header or cookies, call supabase.auth.getUser(token) to verify, query profiles table with supabase.from('profiles').select() for user details, attach to req.user, (d) Update optionalAuth() similarly but don't error on missing/invalid token, (e) Keep restrictTo and adminOnly unchanged",
+    "Delete backend/src/utils/jwt.js - Supabase Auth handles JWT creation/verification",
+    "Update backend/src/config/database.js: replace PrismaClient with re-export of supabase clients from supabase.js for backward compat during migration, or delete if not needed",
+    "Update backend/src/controllers/auth.controller.js: (a) In register(): use supabase.auth.signUp({email, password, options:{data:{name}}}) then insert profile row, return user and session.access_token, (b) In login(): use supabase.auth.signInWithPassword(), update last_login in profiles, return token, (c) In logout(): call supabase.auth.signOut(), (d) In getMe(): query profiles with relation counts, (e) In updateProfile(): update profiles row, (f) In changePassword(): use supabase.auth.updateUser({password})",
+    "Update backend/src/controllers/admin.controller.js: (a) Replace all prisma.user calls with supabase.from('profiles'), (b) Replace prisma.lessonProgress with supabase.from('lesson_progress'), (c) Replace prisma.siteVisit with supabase.from('site_visits'), (d) Convert prisma.user.count() to supabase.from('profiles').select('*', {count:'exact',head:true}), (e) Replace $queryRaw for daily visits with supabase.rpc() or equivalent date grouping query, (f) Use supabaseAdmin for user deletion via auth.admin.deleteUser()",
+    "Update backend/src/controllers/lesson.controller.js: (a) Replace prisma.lesson.findMany() with supabase.from('lessons').select(), (b) Replace prisma.lessonProgress.findMany() with supabase.from('lesson_progress').select(), (c) Replace prisma.lesson.findUnique() with supabase.from('lessons').select().eq('slug', slug).single(), (d) Replace prisma.siteVisit.create() with supabase.from('site_visits').insert(), (e) Replace prisma.lesson.create/update/delete with Supabase equivalents",
+    "Update backend/src/controllers/progress.controller.js: (a) Replace prisma.lessonProgress calls with supabase.from('lesson_progress'), (b) Convert upsert pattern to supabase.from().upsert() with onConflict, (c) Replace prisma.watchHistory with supabase.from('watch_history')",
+    "Update backend/src/routes/user.routes.js: replace inline prisma.user.findUnique with supabase.from('profiles').select()"
+  ],
+  "acceptance_criteria": [
+    "No Prisma imports remain in any controller or middleware file",
+    "All controllers use supabase.from() for database operations",
+    "Auth middleware verifies tokens via supabase.auth.getUser()",
+    "REST API endpoints maintain same request/response format",
+    "Admin operations use supabaseAdmin for privileged actions"
+  ],
+  "verification": [
+    "Run 'npm install && npm run dev' in backend folder - server should start without import errors",
+    "GET http://localhost:5000/api/health should return ok status"
+  ],
+  "blocked_reason": null,
+  "findings": "All controllers now use supabaseAdmin to bypass RLS for proper data access. Schema uses 'users' table (not 'profiles'). camelCase to snake_case mapping implemented in all responses. Watch history uses manual check-and-update pattern since Supabase upsert doesn't support increment. The old prisma/seed.js remains but is not imported - can be deleted in cleanup. FEAT-003 should update frontend AuthContext to handle Supabase session tokens."
+}

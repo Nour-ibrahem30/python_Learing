@@ -1,5 +1,4 @@
-import jwt from 'jsonwebtoken';
-import prisma from '../config/database.js';
+import { supabase, supabaseAdmin } from '../config/supabase.js';
 import { AppError, asyncHandler } from './errorHandler.js';
 
 // Protect routes - require authentication
@@ -18,28 +17,33 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Verify token with Supabase
+    const { data: { user: authUser }, error } = await supabase.auth.getUser(token);
 
-    // Get user from database
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        avatarUrl: true,
-        role: true,
-        isVerified: true,
-      },
-    });
+    if (error || !authUser) {
+      return next(new AppError('Token مش صالح. سجل دخول تاني.', 401));
+    }
 
-    if (!user) {
+    // Get user profile from database using admin client to bypass RLS
+    const { data: user, error: userError } = await supabaseAdmin
+      .from('users')
+      .select('id, email, name, avatar_url, role, is_verified')
+      .eq('id', authUser.id)
+      .single();
+
+    if (userError || !user) {
       return next(new AppError('المستخدم ده مش موجود', 401));
     }
 
-    // Attach user to request
-    req.user = user;
+    // Attach user to request with camelCase mapping
+    req.user = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      avatarUrl: user.avatar_url,
+      role: user.role,
+      isVerified: user.is_verified,
+    };
     next();
   } catch (_error) {
     return next(new AppError('Token مش صالح. سجل دخول تاني.', 401));
@@ -58,18 +62,27 @@ export const optionalAuth = asyncHandler(async (req, res, next) => {
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await prisma.user.findUnique({
-        where: { id: decoded.id },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          avatarUrl: true,
-          role: true,
-        },
-      });
-      req.user = user;
+      // Verify token with Supabase
+      const { data: { user: authUser }, error } = await supabase.auth.getUser(token);
+
+      if (!error && authUser) {
+        // Get user profile from database using admin client
+        const { data: user } = await supabaseAdmin
+          .from('users')
+          .select('id, email, name, avatar_url, role')
+          .eq('id', authUser.id)
+          .single();
+
+        if (user) {
+          req.user = {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            avatarUrl: user.avatar_url,
+            role: user.role,
+          };
+        }
+      }
     } catch (_error) {
       // Token invalid, but that's okay for optional auth
       req.user = null;
