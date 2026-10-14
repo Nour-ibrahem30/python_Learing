@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import './CodeEditor.css';
 
 const editorVariants = {
@@ -29,6 +29,17 @@ const stickerVariants = {
   }),
 };
 
+// Floating animation for the editor
+const floatingAnimation = {
+  y: [0, -8, 0],
+  transition: {
+    duration: 4,
+    ease: 'easeInOut',
+    repeat: Infinity,
+    repeatType: 'loop',
+  },
+};
+
 const codeLines = [
   { num: '01', type: 'comment', content: '# كل حاجة كبيرة بدأت بسطر' },
   { num: '02', type: 'code', content: '<em>name</em> = <b>"Pythonista"</b>' },
@@ -39,8 +50,14 @@ const codeLines = [
 ];
 
 export function CodeEditor() {
+  const shouldReduceMotion = useReducedMotion();
+  
   return (
-    <div className="hero-art" dir="ltr">
+    <motion.div 
+      className="hero-art" 
+      dir="ltr"
+      animate={shouldReduceMotion ? {} : floatingAnimation}
+    >
       <motion.div 
         className="yellow-sticker"
         variants={stickerVariants}
@@ -115,6 +132,6 @@ export function CodeEditor() {
       >
         {`{ }`}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

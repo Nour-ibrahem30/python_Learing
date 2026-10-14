@@ -1,27 +1,30 @@
 {
   "id": "FEAT-001",
   "type": "feat",
-  "description": "SEO and static assets: Add Open Graph/Twitter meta tags to index.html, create robots.txt and sitemap.xml, add PDF download links to lessons",
+  "description": "Add enhanced animations to Hero section and CodeEditor component: floating animation on the code editor, gradient text effect on heading, animated background blobs, improved scribble animation, staggered text reveal, and pulse animation on CTA button. Must preserve all existing functionality including navigation links, Button component behavior, and RTL text handling.",
   "status": "completed",
   "steps": [
-    "In index.html: Add Open Graph meta tags (og:title='بايثون مع نوار — تعلم Python بالفيديو', og:description, og:image='/favicon.svg', og:url) and Twitter Card tags (twitter:card='summary_large_image', twitter:title, twitter:description). Add canonical URL link tag.",
-    "Create public/robots.txt with User-agent: * Allow: / and Sitemap directive pointing to sitemap.xml",
-    "Create public/sitemap.xml with basic structure listing /, /lessons, and /lesson/:slug for each lesson from lessons.js",
-    "In src/data/lessons.js: Add pdfUrl field to each lesson object. Use pattern '/pdfs/{number}-{slug}.pdf' (e.g., '/pdfs/01-whetting-appetite.pdf'). PDF files already exist in public/pdfs/.",
-    "In src/pages/LessonPage.jsx: Add a PDF download button in the lesson hero section. Label: 'حمّل الـ PDF'. Use an anchor tag with download attribute. Add a download icon (📥 or SVG). Only show if lesson.pdfUrl exists.",
-    "In src/pages/LessonPage.css: Style .pdf-download-btn with existing button patterns: background var(--blue), white text, border-radius var(--radius-sm), hover effect. Add icon spacing."
+    "1. In src/components/sections/Hero.css: Add @keyframes float for subtle up-down floating (transform: translateY), add .gradient-text class with background-clip and linear-gradient animation, add @keyframes blob-move for organic blob movement, add animated background shapes using ::before/::after pseudo-elements with blur and low opacity",
+    "2. In src/components/sections/Hero.jsx: Add floating animation variant to CodeEditor wrapper using Framer Motion animate prop with y oscillation (useAnimation or animate keyframes), wrap h1 text in motion.span elements for staggered character/word reveal by extending containerVariants children delay, apply gradient-text class to heading highlight span",
+    "3. In src/components/sections/Hero.css: Enhance .scribble animation with custom easing and slight overshoot, add CSS variables for animation timing that respect prefers-reduced-motion by setting --anim-duration to 0s in reduced motion media query",
+    "4. In src/components/sections/CodeEditor.jsx: Add useReducedMotion hook check and conditionally disable floating animation. Add subtle floating animation to the editor wrapper using motion.div with animate={{ y: [0, -10, 0] }} and repeat: Infinity",
+    "5. In src/components/sections/CodeEditor.css: Add @keyframes float-subtle with transform: translateY, apply to .editor with animation: float-subtle 4s ease-in-out infinite. Add CSS to disable animation when prefers-reduced-motion via :global selector",
+    "6. In src/components/ui/Button.jsx: Add pulse animation variant to primary button on hover using whileHover scale with boxShadow animation cycle. Ensure spring physics for natural feel",
+    "7. Verify: Run 'npm run build' and confirm no errors. All existing button links ('#roadmap', '#lessons') must still work."
   ],
   "acceptance_criteria": [
-    "index.html contains og:title, og:description, og:image, og:url, twitter:card, twitter:title, twitter:description, and canonical link",
-    "public/robots.txt exists and is valid",
-    "public/sitemap.xml exists with proper XML structure",
-    "Every lesson object in lessons.js has a pdfUrl field",
-    "LessonPage shows a styled 'حمّل الـ PDF' button for lessons with PDFs",
-    "npm run build completes successfully"
+    "CodeEditor has smooth floating animation (transform only, not layout-triggering properties)",
+    "Main heading has animated gradient text effect that cycles colors",
+    "Background has subtle animated blob shapes that move organically",
+    "Scribble underline animation has improved easing with slight overshoot effect",
+    "Paragraph text reveals with staggered word/line animation on page load",
+    "CTA button has pulsing glow effect on hover",
+    "All animations disabled when prefers-reduced-motion is set",
+    "npm run build passes with no errors"
   ],
   "verification": [
-    "npm run build"
+    "Run 'npm run build' in c:\\Users\\nouri\\Desktop\\Githup Projects\\python_Learing and verify exit code 0"
   ],
   "blocked_reason": null,
-  "findings": "All steps completed: Added OG/Twitter meta tags to index.html, created robots.txt and sitemap.xml in public/, added pdfUrl field to all 20 lessons in lessons.js, added PDF download button with styling to LessonPage."
+  "findings": "All Hero section animations implemented successfully. Used Framer Motion's useReducedMotion hook for accessibility. CSS animations use transform/opacity only for 60fps performance. Blob animations use CSS keyframes with blur filter for organic effect."
 }

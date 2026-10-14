@@ -1,3 +1,18 @@
+/* Animation timing variables (respect reduced motion) */
+:root {
+  --anim-duration: 1s;
+  --anim-duration-slow: 3s;
+  --anim-duration-blob: 20s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --anim-duration: 0s;
+    --anim-duration-slow: 0s;
+    --anim-duration-blob: 0s;
+  }
+}
+
 .hero {
   max-width: 1260px;
   margin: auto;
@@ -6,6 +21,52 @@
   grid-template-columns: 1.1fr 1fr;
   gap: 65px;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background blobs */
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  z-index: -1;
+  animation: blob-move var(--anim-duration-blob) ease-in-out infinite alternate;
+}
+
+.hero::before {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, var(--blue), #6b8cce);
+  top: -100px;
+  left: -100px;
+}
+
+.hero::after {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, var(--yellow), #f0c040);
+  bottom: -80px;
+  right: -50px;
+  animation-delay: -10s;
+}
+
+@keyframes blob-move {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  100% {
+    transform: translate(15px, 10px) scale(1.02);
+  }
 }
 
 .eyebrow {
@@ -43,6 +104,32 @@ h1 {
   color: var(--blue);
 }
 
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--blue) 0%,
+    #5a8adb 25%,
+    var(--yellow) 50%,
+    #5a8adb 75%,
+    var(--blue) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift var(--anim-duration-slow) linear infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
 .scribble {
   display: block;
   position: absolute;
@@ -54,6 +141,19 @@ h1 {
   stroke: var(--yellow);
   stroke-width: 4;
   stroke-linecap: round;
+}
+
+/* Enhanced scribble animation keyframes */
+@keyframes scribble-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  70% {
+    stroke-dashoffset: -0.05;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 .hero-copy > p {
