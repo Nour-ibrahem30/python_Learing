@@ -30,6 +30,36 @@
 
 .steps {
   padding-top: 15px;
+  position: relative;
+}
+
+/* Animated connecting line */
+.steps-line {
+  position: absolute;
+  left: 23px;
+  top: 50px;
+  bottom: 50px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--blue), #cbd2c1);
+  transform-origin: top;
+  z-index: 0;
+  border-radius: 2px;
+}
+
+/* Icon bounce animation on hover */
+@keyframes icon-bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .step-link {
@@ -86,12 +116,17 @@
   border-radius: 50%;
   padding: 12px;
   transition: all var(--transition-fast);
+  background: var(--paper);
+  position: relative;
+  z-index: 1;
+  transform-origin: center;
 }
 
 .step-link:hover .step-num {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
+  animation: icon-bounce 0.3s ease;
 }
 
 @media (max-width: 1000px) {
@@ -120,5 +155,11 @@
   
   .steps p {
     font-size: 12px;
+  }
+  
+  .steps-line {
+    left: 18px;
+    top: 40px;
+    bottom: 40px;
   }
 }

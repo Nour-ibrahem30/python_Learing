@@ -1,25 +1,31 @@
 {
   "id": "FEAT-003",
   "type": "feat",
-  "description": "Backend preparation: Create API service placeholder and AuthContext for future backend integration",
+  "description": "Add infinite marquee scroll to Ticker with pause on hover and gradient fade edges. Add animated connecting line between Roadmap steps, number counter animation when in view, icon hover animations, and slide+fade entrance for step cards. Must preserve all existing navigation links and roadmapSteps data rendering.",
   "status": "completed",
   "steps": [
-    "Create src/services/ directory if it doesn't exist",
-    "Create src/services/api.js: Export placeholder functions for future backend integration. Include: (1) Auth functions: login(email, password), logout(), register(name, email, password), getCurrentUser() - all return Promise.resolve with mock data or null. (2) Progress functions: saveProgress(lessonSlug), getUserProgress() - return Promise.resolve. (3) Admin functions: getStats(), getUsers() - return Promise.resolve with empty arrays. Add JSDoc comments explaining these are placeholders.",
-    "Create src/context/ directory if it doesn't exist",
-    "Create src/context/AuthContext.jsx: Create AuthContext using createContext. Create AuthProvider component wrapping children with context provider. State: user (null), isAuthenticated (false), isLoading (false). Functions: login, logout, register (all placeholder async functions that just log and return). Export useAuth hook using useContext. Add JSDoc comments noting this is a placeholder for real backend integration."
+    "1. In src/components/sections/Ticker.jsx: Double the items array to create seamless loop. Wrap items in motion.div with animate={{ x: [0, -50%] }} and transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}. Add onHoverStart/End to pause animation using useAnimation hook",
+    "2. In src/components/sections/Ticker.css: Add gradient fade masks on left and right edges using ::before/::after with background: linear-gradient(to right, var(--paper), transparent) and pointer-events: none. Add overflow: hidden to container",
+    "3. In src/components/sections/Roadmap.jsx: Add vertical connecting line using ::before pseudo-element on .steps container. Animate line height from 0 to 100% using motion.div with whileInView and scaleY transform (transform-origin: top)",
+    "4. In src/components/sections/Roadmap.jsx: Create animated counter for step numbers. Use useInView hook and useEffect to trigger count animation from 0 to step.number. Use motion.span with animate={{ opacity: [0,1] }} for each digit change",
+    "5. In src/components/sections/Roadmap.css: Add @keyframes icon-bounce for step-num on hover. Add .step-link:hover .step-num with animation: icon-bounce 0.3s ease. Add transform-origin: center for bounce effect",
+    "6. In src/components/sections/Roadmap.jsx: Enhance stepVariants with x: -30 to x: 0 slide animation combined with opacity fade. Add custom delay multiplier and viewport once:true setting",
+    "7. Verify: Run 'npm run build'. Confirm Link to='/lessons?filter=${step.route}' navigation preserved for all roadmap steps."
   ],
   "acceptance_criteria": [
-    "src/services/api.js exports login, logout, register, getCurrentUser, saveProgress, getUserProgress, getStats, getUsers",
-    "All API functions return Promises",
-    "src/context/AuthContext.jsx exports AuthProvider component and useAuth hook",
-    "AuthProvider manages user, isAuthenticated, isLoading state",
-    "JSDoc comments explain placeholder nature",
-    "npm run build completes successfully"
+    "Ticker items scroll infinitely in marquee style without visible jump/reset",
+    "Ticker animation pauses smoothly when user hovers over it",
+    "Ticker has gradient fade on left and right edges",
+    "Roadmap has animated vertical line connecting all steps that draws on scroll",
+    "Step numbers animate counting up from 0 when they enter viewport",
+    "Step icons have bounce/scale animation on hover",
+    "Step cards slide in from left with fade when scrolled into view",
+    "All roadmap links navigate correctly",
+    "npm run build passes with no errors"
   ],
   "verification": [
-    "npm run build"
+    "Run 'npm run build' in c:\\Users\\nouri\\Desktop\\Githup Projects\\python_Learing and verify exit code 0"
   ],
   "blocked_reason": null,
-  "findings": "Created src/services/api.js with 8 placeholder functions (login, logout, register, getCurrentUser, saveProgress, getUserProgress, getStats, getUsers). Created src/context/AuthContext.jsx with AuthProvider component and useAuth hook. All functions include JSDoc documentation explaining placeholder nature. Build verified successfully."
+  "findings": "Implemented all animations using Framer Motion. Ticker uses useAnimationControls for pause-on-hover. Roadmap uses useInView for counter animation and scaleY for connecting line animation. All navigation links preserved."
 }

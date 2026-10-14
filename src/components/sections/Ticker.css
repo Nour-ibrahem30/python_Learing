@@ -3,14 +3,42 @@
   background: #f1f1e8;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 31px;
   padding: 21px 18px;
   font-size: 16px;
   font-weight: 600;
   overflow: hidden;
   white-space: nowrap;
   font-family: 'Space Grotesk', monospace;
+  position: relative;
+}
+
+/* Gradient fade edges */
+.ticker::before,
+.ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ticker::before {
+  left: 0;
+  background: linear-gradient(to right, #f1f1e8, transparent);
+}
+
+.ticker::after {
+  right: 0;
+  background: linear-gradient(to left, #f1f1e8, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 31px;
+  will-change: transform;
 }
 
 .ticker i {
@@ -26,8 +54,16 @@
 
 @media (max-width: 1000px) {
   .ticker {
-    gap: 18px;
     font-size: 13px;
+  }
+  
+  .ticker::before,
+  .ticker::after {
+    width: 50px;
+  }
+  
+  .ticker-track {
+    gap: 18px;
   }
   
   .ticker .arabic {
@@ -37,10 +73,17 @@
 
 @media (max-width: 700px) {
   .ticker {
-    justify-content: flex-start;
-    gap: 19px;
     padding-block: 16px;
     font-size: 12px;
+  }
+  
+  .ticker::before,
+  .ticker::after {
+    width: 30px;
+  }
+  
+  .ticker-track {
+    gap: 19px;
   }
   
   .ticker i {
