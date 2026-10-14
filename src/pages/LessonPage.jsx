@@ -47,8 +47,6 @@ export function LessonPage() {
     );
   }
 
-  const hasVideo = lesson.videoUrl && lesson.videoUrl.trim() !== '';
-
   return (
     <>
       <Header />

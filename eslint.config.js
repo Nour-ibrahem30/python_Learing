@@ -17,5 +17,14 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // Allow underscore-prefixed variables to be unused (placeholder params)
+      'no-unused-vars': ['error', { 
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_'
+      }],
+      // Allow non-component exports in context files
+      'react-refresh/only-export-components': ['warn', { allowExportNames: ['useAuth'] }]
+    }
   },
 ])

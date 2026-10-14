@@ -15,10 +15,10 @@ import './VideoPlayer.css';
  * 3. Get video: const video = cld.video(cloudinaryId);
  * 4. Use AdvancedVideo component or embed player
  */
-export function VideoPlayer({ cloudinaryId, videoUrl }) {
+export function VideoPlayer({ cloudinaryId: _cloudinaryId, videoUrl }) {
   const hasVideo = videoUrl && videoUrl.trim() !== '';
   // TODO: Check cloudinaryId when Cloudinary is integrated
-  // const hasCloudinaryVideo = cloudinaryId && cloudinaryId.trim() !== '';
+  // const hasCloudinaryVideo = _cloudinaryId && _cloudinaryId.trim() !== '';
 
   if (hasVideo) {
     return (

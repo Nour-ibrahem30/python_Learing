@@ -54,11 +54,11 @@ export function AuthProvider({ children }) {
   /**
    * Login function - placeholder
    * @param {string} email - User's email
-   * @param {string} password - User's password
+   * @param {string} _password - User's password (unused in placeholder)
    * @returns {Promise<boolean>} Success status
    * @description Placeholder - will integrate with api.login() when backend is ready
    */
-  const login = useCallback(async (email, password) => {
+  const login = useCallback(async (email, _password) => {
     console.log('[AuthContext Placeholder] Login:', { email });
     setIsLoading(true);
     
@@ -112,11 +112,11 @@ export function AuthProvider({ children }) {
    * Register function - placeholder
    * @param {string} name - User's full name
    * @param {string} email - User's email
-   * @param {string} password - User's password
+   * @param {string} _password - User's password (unused in placeholder)
    * @returns {Promise<boolean>} Success status
    * @description Placeholder - will integrate with api.register() when backend is ready
    */
-  const register = useCallback(async (name, email, password) => {
+  const register = useCallback(async (name, email, _password) => {
     console.log('[AuthContext Placeholder] Register:', { name, email });
     setIsLoading(true);
     

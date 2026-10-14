@@ -15,6 +15,7 @@
  */
 
 // Base URL for API calls (to be configured when backend is ready)
+// eslint-disable-next-line no-unused-vars
 const API_BASE_URL = '/api';
 
 // ==========================================
@@ -24,11 +25,11 @@ const API_BASE_URL = '/api';
 /**
  * Login user with email and password
  * @param {string} email - User's email address
- * @param {string} password - User's password
+ * @param {string} _password - User's password (unused in placeholder)
  * @returns {Promise<{user: Object, token: string}>} User data and auth token
  * @description Placeholder - will connect to backend auth endpoint
  */
-export async function login(email, password) {
+export async function login(email, _password) {
   console.log('[API Placeholder] Login attempt:', { email });
   
   // Mock successful login response
@@ -59,11 +60,11 @@ export async function logout() {
  * Register a new user
  * @param {string} name - User's full name
  * @param {string} email - User's email address
- * @param {string} password - User's chosen password
+ * @param {string} _password - User's chosen password (unused in placeholder)
  * @returns {Promise<{user: Object, token: string}>} New user data and auth token
  * @description Placeholder - will create user in backend database
  */
-export async function register(name, email, password) {
+export async function register(name, email, _password) {
   console.log('[API Placeholder] Register attempt:', { name, email });
   
   return Promise.resolve({

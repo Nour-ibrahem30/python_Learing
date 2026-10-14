@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from '../components/layout/Header';
@@ -26,16 +26,12 @@ const symbolMap = {
 
 export function LessonsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  // Get initial filter from URL
   const initialFilter = searchParams.get('filter') || 'all';
-  const [filter, setFilter] = useState(initialFilter);
+  // Only use valid filters
+  const validFilter = categories.some(c => c.id === initialFilter) ? initialFilter : 'all';
+  const [filter, setFilter] = useState(validFilter);
   const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    const filterParam = searchParams.get('filter');
-    if (filterParam && categories.some(c => c.id === filterParam)) {
-      setFilter(filterParam);
-    }
-  }, [searchParams]);
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);

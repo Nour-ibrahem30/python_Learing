@@ -2,12 +2,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Playground.css';
 
-// Simple code validation
-const validateCode = (code, expectedOutput) => {
-  // Basic validation - checks if the output matches expected pattern
-  return code.toLowerCase().includes(expectedOutput.toLowerCase());
-};
-
 export function Playground() {
   const [name, setName] = useState('Pythonista');
   const [output, setOutput] = useState('❯ Hello, Pythonista!');

@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 export function useCustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const [isMouseDevice, setIsMouseDevice] = useState(false);
   const [isOverInput, setIsOverInput] = useState(false);
+  
+  // Check device type once on mount using useMemo to avoid re-renders
+  const isMouseDevice = useMemo(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(pointer: fine)').matches;
+    }
+    return false;
+  }, []);
 
   useEffect(() => {
-    // Check if device has fine pointer (mouse)
-    const hasFinePonter = window.matchMedia('(pointer: fine)').matches;
-    setIsMouseDevice(hasFinePonter);
-
-    if (!hasFinePonter) return;
+    if (!isMouseDevice) return;
 
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
@@ -29,7 +32,7 @@ export function useCustomCursor() {
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [isMouseDevice]);
 
   return {
     position,
