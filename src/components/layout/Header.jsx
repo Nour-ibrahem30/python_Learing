@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useDarkMode } from '../../hooks/useDarkMode';
 import './Header.css';
 
 export function Header() {
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const { isDark, toggle } = useDarkMode();
 
   return (
     <motion.header 
@@ -34,6 +36,14 @@ export function Header() {
           </>
         )}
       </nav>
+      
+      <button 
+        className="theme-toggle" 
+        onClick={toggle}
+        aria-label={isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن'}
+      >
+        {isDark ? '☀️' : '🌙'}
+      </button>
       
       <motion.div
         whileHover={{ scale: 1.02 }}

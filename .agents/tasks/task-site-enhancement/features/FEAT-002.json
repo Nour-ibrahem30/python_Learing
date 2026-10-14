@@ -1,0 +1,44 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Core UX features: Dark mode with persistence, progress tracking in localStorage, enhanced About section with photo/social links, custom 404 page, and Cloudinary video player preparation",
+  "status": "completed",
+  "steps": [
+    "Create src/hooks/useDarkMode.js: Hook that reads/writes 'theme' key to localStorage, defaults to 'light', returns { isDark, toggle }. Check for prefers-color-scheme on first load.",
+    "In src/styles/variables.css: Add [data-theme='dark'] selector with dark color variables: --paper: #1a1a1a, --ink: #e8e8e8, --blue: #5a8adb, --yellow: #f9d65c, --line: #333, plus adjusted shadows. Keep existing :root as light theme.",
+    "In src/components/layout/Header.jsx: Add dark mode toggle button after nav, before CTA. Use sun (☀️) for light mode, moon (🌙) for dark mode. Import and use useDarkMode hook.",
+    "In src/components/layout/Header.css: Style .theme-toggle button with circular shape, hover effects, icon sizing.",
+    "In src/App.jsx: Import useDarkMode, apply data-theme attribute to root div based on isDark state.",
+    "Create src/hooks/useProgress.js: Hook using localStorage key 'lesson-progress' storing array of viewed lesson slugs. Export markLessonViewed(slug), isLessonViewed(slug), getProgress() returning { viewed: string[], totalLessons: number }.",
+    "In src/pages/LessonPage.jsx: Import useProgress, call markLessonViewed(slug) in useEffect on mount. Show 'شوفت الدرس ده ✓' badge near lesson title if isLessonViewed returns true.",
+    "In src/components/sections/LessonCard.jsx: Import useProgress, show checkmark badge on cards where isLessonViewed(lesson.slug) is true.",
+    "In src/components/sections/LessonCard.css: Style .viewed-badge with green background, white checkmark, positioned top-right of thumbnail.",
+    "In src/components/sections/About.jsx: Add photo placeholder div (with a Python snake emoji or icon as placeholder), add social links section with YouTube, GitHub, Twitter/X links. Expand the story text to be more personal and engaging. Keep all text in Egyptian Arabic.",
+    "In src/components/sections/About.css: Add .about-photo styles (circular, border), .social-links grid with hover effects.",
+    "Create src/pages/NotFoundPage.jsx: Fun 404 page with Python theme. Include: large '404' heading, confused Python snake emoji, Egyptian Arabic message 'الصفحة دي مش موجودة يا صاحبي', animated elements with framer-motion, links to home and lessons.",
+    "Create src/pages/NotFoundPage.css: Style the 404 page with centered layout, large typography, animation-friendly structure.",
+    "In src/App.jsx: Add catch-all route <Route path='*' element={<NotFoundPage />} /> after existing routes.",
+    "In src/data/lessons.js: Add cloudinaryId field (empty string '') to each lesson object to prepare for Cloudinary integration.",
+    "Create src/components/common/VideoPlayer.jsx: Placeholder component that accepts lessonCloudinaryId and videoUrl props. For now, show the existing video-coming-soon or video-placeholder UI based on videoUrl. Add comment noting where Cloudinary SDK integration will go.",
+    "Create src/components/common/VideoPlayer.css: Responsive video player container styles, aspect-ratio 16/9.",
+    "In src/pages/LessonPage.jsx: Replace the video section JSX with the new <VideoPlayer /> component, passing lesson.cloudinaryId and lesson.videoUrl."
+  ],
+  "acceptance_criteria": [
+    "Dark mode toggle appears in header and toggles theme",
+    "Theme persists across page refreshes via localStorage",
+    "All components render correctly in both light and dark modes",
+    "Progress tracking saves viewed lessons to localStorage",
+    "LessonPage shows 'شوفت الدرس ده' badge when revisiting a viewed lesson",
+    "LessonCard shows checkmark badge on viewed lessons",
+    "About section shows photo placeholder and social links",
+    "404 page displays for unknown routes with Python-themed design",
+    "VideoPlayer component renders in lesson pages",
+    "All lessons have cloudinaryId field in lessons.js",
+    "npm run build completes successfully"
+  ],
+  "verification": [
+    "npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": "All features implemented successfully. Dark mode toggle in Header with localStorage persistence. Progress tracking with useProgress hook. Enhanced About section with photo placeholder and social links. Python-themed 404 page. VideoPlayer component ready for Cloudinary integration. cloudinaryId field added to all lessons."
+}

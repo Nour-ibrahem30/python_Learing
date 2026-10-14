@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useProgress } from '../../hooks/useProgress';
 import './LessonCard.css';
 
 const cardVariants = {
@@ -30,9 +31,11 @@ const accentMap = {
 };
 
 export function LessonCard({ lesson }) {
+  const { isLessonViewed } = useProgress();
   const hasVideo = lesson.videoUrl && lesson.videoUrl.trim() !== '';
   const symbol   = symbolMap[lesson.theme] || '{ }';
   const accent   = accentMap[lesson.theme]  || '#4a7fcb';
+  const viewed   = isLessonViewed(lesson.slug);
 
   return (
     <motion.div
@@ -50,6 +53,11 @@ export function LessonCard({ lesson }) {
       >
         {/* ── Thumbnail ── */}
         <div className={`thumbnail ${lesson.theme}`} dir="ltr">
+          {/* Viewed badge */}
+          {viewed && (
+            <span className="viewed-badge" aria-label="شوفت الدرس ده">✓</span>
+          )}
+          
           {/* macOS-style editor bar */}
           <div className="code-header">
             <span className="win-dot" style={{ background: '#ff6059' }} />

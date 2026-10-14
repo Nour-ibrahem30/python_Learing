@@ -1,9 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { VideoPlayer } from '../components/common/VideoPlayer';
 import { getLessonBySlug, getAdjacentLessons, getRelatedLessons } from '../data/lessons';
 import { getDocsForLesson } from '../data/docs';
+import { useProgress } from '../hooks/useProgress';
 import './LessonPage.css';
 
 export function LessonPage() {
@@ -12,6 +15,16 @@ export function LessonPage() {
   const { prev, next } = getAdjacentLessons(slug);
   const related = getRelatedLessons(slug, 3);
   const docs = getDocsForLesson(slug);
+  const { markLessonViewed, isLessonViewed } = useProgress();
+
+  // Mark lesson as viewed when page loads
+  useEffect(() => {
+    if (lesson) {
+      markLessonViewed(slug);
+    }
+  }, [slug, lesson, markLessonViewed]);
+
+  const viewed = lesson ? isLessonViewed(slug) : false;
 
   if (!lesson) {
     return (
@@ -73,7 +86,12 @@ export function LessonPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
               >
-                <span className="lesson-label-badge">{lesson.label}</span>
+                <div className="lesson-badges">
+                  <span className="lesson-label-badge">{lesson.label}</span>
+                  {viewed && (
+                    <span className="lesson-viewed-badge">شوفت الدرس ده ✓</span>
+                  )}
+                </div>
                 <h1>{lesson.titleAr}</h1>
                 <p className="lesson-title-en">{lesson.title}</p>
                 <p className="lesson-description">{lesson.desc}</p>
@@ -123,35 +141,10 @@ export function LessonPage() {
         <section className="lesson-content">
           <div className="container">
             <div className="video-section">
-              {hasVideo ? (
-                <motion.div 
-                  className="video-player"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <div className="video-placeholder">
-                    <a 
-                      href={lesson.videoUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="play-button"
-                    >
-                      <span>▶</span>
-                    </a>
-                    <p>اضغط لمشاهدة الفيديو</p>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div 
-                  className="video-coming-soon"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                >
-                  <span className="coming-icon">🎬</span>
-                  <h3>الفيديو قريبًا</h3>
-                  <p>الشرح ده لسه ما اتسجلش. هيتضاف قريب إن شاء الله.</p>
-                </motion.div>
-              )}
+              <VideoPlayer 
+                cloudinaryId={lesson.cloudinaryId} 
+                videoUrl={lesson.videoUrl} 
+              />
             </div>
 
             {/* Documentation Section */}
