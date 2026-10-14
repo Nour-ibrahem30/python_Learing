@@ -2,6 +2,19 @@
   min-height: 100vh;
 }
 
+/* Reading Progress Bar */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--blue);
+  transform-origin: 0%;
+  z-index: 100;
+  box-shadow: 0 0 10px rgba(48, 101, 200, 0.5);
+}
+
 /* Breadcrumb */
 .breadcrumb-bar {
   background: #f5f6f0;
@@ -167,6 +180,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-xl);
+  transition: all var(--transition-normal);
 }
 
 .code-window-header {
@@ -389,22 +403,51 @@
   margin: 0;
 }
 
+/* Docs Block with Accordion */
 .docs-block {
-  padding: 30px;
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 
 .docs-block:last-of-type {
   border-bottom: none;
 }
 
-.docs-block h3 {
-  font-size: 20px;
-  margin: 0 0 15px;
-  color: var(--ink);
+.docs-block-toggle {
+  width: 100%;
+  padding: 25px 30px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background var(--transition-fast);
 }
 
-.docs-block > p {
+.docs-block-toggle:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.docs-block-toggle h3 {
+  font-size: 20px;
+  margin: 0;
+  color: var(--ink);
+  text-align: right;
+}
+
+.toggle-icon {
+  font-size: 12px;
+  color: #73786f;
+  transition: transform var(--transition-fast);
+}
+
+.docs-block-content {
+  padding: 0 30px 30px;
+  overflow: hidden;
+}
+
+.docs-block-content > p {
   font-size: 15px;
   line-height: 1.9;
   color: #5a5f54;
@@ -428,19 +471,29 @@
   color: #8a9199;
 }
 
+/* Enhanced Copy Button with Animation */
 .copy-btn {
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 4px;
   color: #a0a8b4;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   transition: all var(--transition-fast);
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .copy-btn:hover {
   background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.copy-btn.copied {
+  background: #22c55e;
   color: white;
 }
 
@@ -535,7 +588,7 @@
   white-space: pre-wrap;
 }
 
-/* Navigation */
+/* Navigation with Enhanced Hover */
 .lesson-navigation {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -544,16 +597,36 @@
 }
 
 .nav-card {
+  display: block;
   background: #f8f9f4;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: 20px 25px;
   transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(48, 101, 200, 0.08), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
 .nav-card:hover {
   border-color: var(--blue);
   background: #f0f4fa;
+  box-shadow: 0 10px 30px rgba(48, 101, 200, 0.15);
+}
+
+.nav-card:hover::before {
+  transform: translateX(100%);
 }
 
 .nav-label {
@@ -561,12 +634,16 @@
   font-size: 12px;
   color: #73786f;
   margin-bottom: 5px;
+  position: relative;
+  z-index: 1;
 }
 
 .nav-title {
   font-size: 16px;
   font-weight: 600;
   color: var(--ink);
+  position: relative;
+  z-index: 1;
 }
 
 .nav-prev {
@@ -595,6 +672,7 @@
 }
 
 .related-card {
+  display: block;
   padding: 25px;
   border-radius: var(--radius-md);
   transition: all var(--transition-normal);
@@ -608,8 +686,7 @@
 .related-card.orange { background: #f7f0e8; }
 
 .related-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .related-number {
@@ -709,10 +786,15 @@
   
   .docs-header,
   .docs-intro,
-  .docs-block,
+  .docs-block-toggle,
+  .docs-block-content,
   .docs-keypoints,
   .docs-mistakes {
     padding: 20px;
+  }
+  
+  .docs-block-content {
+    padding-top: 0;
   }
   
   .docs-keypoints li {

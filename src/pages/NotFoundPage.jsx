@@ -4,11 +4,55 @@ import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import './NotFoundPage.css';
 
+// Floating code snippets data
+const floatingSnippets = [
+  { text: '{}', x: '10%', y: '20%', delay: 0 },
+  { text: 'def', x: '85%', y: '15%', delay: 0.5 },
+  { text: 'class', x: '15%', y: '70%', delay: 1 },
+  { text: 'import', x: '80%', y: '75%', delay: 1.5 },
+  { text: '# comment', x: '50%', y: '10%', delay: 2 },
+  { text: 'return', x: '90%', y: '45%', delay: 2.5 },
+  { text: 'if:', x: '5%', y: '45%', delay: 3 },
+  { text: 'True', x: '70%', y: '85%', delay: 3.5 },
+];
+
+// Floating Code Snippet Component
+function FloatingSnippet({ text, x, y, delay }) {
+  return (
+    <motion.span
+      className="floating-snippet"
+      style={{ left: x, top: y }}
+      initial={{ opacity: 0 }}
+      animate={{ 
+        opacity: 0.1,
+        y: [0, -30, 0],
+        x: [0, 10, 0],
+        rotate: [0, 5, 0]
+      }}
+      transition={{
+        opacity: { duration: 0.5, delay },
+        y: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay },
+        x: { duration: 5 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay },
+        rotate: { duration: 6 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut', delay }
+      }}
+    >
+      {text}
+    </motion.span>
+  );
+}
+
 export function NotFoundPage() {
   return (
     <>
       <Header />
       <main className="not-found-page">
+        {/* Floating Code Snippets Background */}
+        <div className="floating-snippets-container">
+          {floatingSnippets.map((snippet, index) => (
+            <FloatingSnippet key={index} {...snippet} />
+          ))}
+        </div>
+
         <div className="container">
           <motion.div 
             className="not-found-content"
@@ -16,21 +60,28 @@ export function NotFoundPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
+            {/* Bouncing Snake Emoji */}
             <motion.span 
               className="not-found-emoji"
               initial={{ scale: 0, rotate: -20 }}
-              animate={{ scale: 1, rotate: 0 }}
+              animate={{ 
+                scale: 1, 
+                rotate: 0,
+                y: [0, -20, 0]
+              }}
               transition={{ 
-                type: 'spring', 
-                stiffness: 200, 
-                delay: 0.2 
+                scale: { type: 'spring', stiffness: 200, delay: 0.2 },
+                rotate: { type: 'spring', stiffness: 200, delay: 0.2 },
+                y: { repeat: Infinity, duration: 2, ease: 'easeInOut', delay: 0.5 }
               }}
             >
               🐍
             </motion.span>
             
+            {/* Glitch 404 Text */}
             <motion.h1 
-              className="not-found-title"
+              className="not-found-title glitch"
+              data-text="404"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -56,26 +107,45 @@ export function NotFoundPage() {
               يمكن الرابط غلط أو الصفحة اتشالت
             </motion.p>
             
+            {/* Enhanced Action Buttons */}
             <motion.div 
               className="not-found-actions"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Link to="/" className="btn btn-primary">
-                ← الصفحة الرئيسية
-              </Link>
-              <Link to="/lessons" className="btn btn-secondary">
-                شوف الفيديوهات
-              </Link>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link to="/" className="btn btn-primary">
+                  ← الصفحة الرئيسية
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link to="/lessons" className="btn btn-secondary">
+                  شوف الفيديوهات
+                </Link>
+              </motion.div>
             </motion.div>
 
+            {/* Enhanced Code Window with Hover Tilt */}
             <motion.div 
               className="not-found-code"
               dir="ltr"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.7 }}
+              whileHover={{ 
+                scale: 1.02,
+                rotateX: 2,
+                rotateY: -2,
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+              }}
+              style={{ perspective: 1000 }}
             >
               <div className="code-window">
                 <div className="code-window-header">

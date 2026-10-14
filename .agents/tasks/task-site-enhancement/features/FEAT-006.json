@@ -1,0 +1,36 @@
+{
+  "id": "FEAT-006",
+  "type": "feat",
+  "description": "Add hero parallax and code-block copy animation with success feedback to LessonPage. Add smooth accordion animations, reading progress bar at top, and improved navigation card hover. Add bouncing snake animation, glitch text on '404', floating code snippets, and interactive hover effects to NotFoundPage. Must preserve LessonPage routing, breadcrumbs, video player, docs sections, navigation, and NotFoundPage action buttons.",
+  "status": "completed",
+  "steps": [
+    "1. In src/pages/LessonPage.jsx: Add parallax to .lesson-hero using useScroll with target ref and useTransform. Apply y offset to hero content and code window at different rates for depth effect",
+    "2. In src/pages/LessonPage.jsx: Enhance copy button with success animation. On click, change button text/icon to '✓ تم' with motion.span layoutId transition. Add green background flash using animate={{ backgroundColor: ['#22c55e', 'rgba(255,255,255,0.1)'] }}",
+    "3. In src/pages/LessonPage.jsx: Add smooth accordion animation to docs-section blocks. Wrap content in AnimatePresence and motion.div with initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}. If no accordion exists, add expand/collapse toggle to each section",
+    "4. In src/pages/LessonPage.jsx and LessonPage.css: Add reading progress bar fixed at top of page. Create ProgressBar component using useScroll() and scaleX transform based on scrollYProgress. Style as thin bar (3px) with var(--blue) background, position: fixed, top: 0, z-index: 100",
+    "5. In src/pages/LessonPage.css: Enhance .nav-card hover with scale(1.02), y: -4, and box-shadow animation. Add gradient background sweep on hover using ::before with transform: translateX(-100%) to translateX(100%)",
+    "6. In src/pages/NotFoundPage.jsx: Add bouncing animation to snake emoji. Use motion.span with animate={{ y: [0, -20, 0] }} and transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}",
+    "7. In src/pages/NotFoundPage.jsx and NotFoundPage.css: Add glitch effect to '404' text. Create CSS @keyframes glitch with transform skew and clip-path variations. Add ::before and ::after pseudo-elements with offset positions and different colors. Animate on hover or continuously subtle",
+    "8. In src/pages/NotFoundPage.jsx: Add floating code snippets in background. Create array of code strings ['{}', 'def', 'class', 'import', '# comment']. Map to absolutely positioned motion.span elements with animate={{ y: [0, -30, 0], x: [0, 10, 0], rotate: [0, 5, 0] }} at random positions with opacity: 0.1",
+    "9. In src/pages/NotFoundPage.jsx: Add interactive hover effects to buttons and code window. Enhance whileHover with more dramatic scale and rotation. Add motion.div wrapper to code-window with hover tilt effect",
+    "10. Verify: Run 'npm run build'. Test that lesson page routing with useParams still works, breadcrumb links function, prev/next navigation works, and 404 page action buttons navigate correctly."
+  ],
+  "acceptance_criteria": [
+    "LessonPage hero has parallax depth effect on scroll",
+    "Copy button shows success animation feedback when clicked",
+    "Docs sections have smooth expand/collapse or entrance animations",
+    "Reading progress bar shows at top of LessonPage and tracks scroll position",
+    "Navigation cards have enhanced hover with scale and gradient sweep",
+    "404 page snake bounces continuously",
+    "404 text has glitch distortion effect",
+    "Background has floating code snippet decorations",
+    "All buttons and interactive elements have enhanced hover states",
+    "All page routing and navigation preserved",
+    "npm run build passes with no errors"
+  ],
+  "verification": [
+    "Run 'npm run build' in c:\\Users\\nouri\\Desktop\\Githup Projects\\python_Learing and verify exit code 0"
+  ],
+  "blocked_reason": null,
+  "findings": "All animations implemented successfully. LessonPage: added reading progress bar, hero parallax with useScroll/useTransform, copy button success animation with AnimatePresence, accordion toggle for docs sections, enhanced navigation card hover with gradient sweep. NotFoundPage: added bouncing snake animation, glitch effect on 404 text with CSS keyframes and pseudo-elements, floating code snippets background, enhanced button and code window hover effects. All routing preserved, build passes."
+}
