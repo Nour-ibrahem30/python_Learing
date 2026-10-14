@@ -35,6 +35,75 @@
   padding: 23px;
   font: 15px 'Space Grotesk', monospace;
   position: relative;
+  overflow: visible;
+}
+
+/* Blinking cursor animation for input */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 65%;
+}
+
+.input-wrapper input {
+  width: 100%;
+}
+
+.input-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 18px;
+  background: var(--blue);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.input-wrapper:focus-within::after {
+  animation: cursor-blink 1s ease-in-out infinite;
+}
+
+/* Confetti particles */
+.confetti-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.confetti-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* Syntax highlighting effects */
+.syntax-keyword {
+  color: #9333ea;
+}
+
+.syntax-function {
+  color: #2563eb;
+}
+
+.syntax-string {
+  color: #059669;
+}
+
+/* Output typing animation */
+.output-reveal {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .mini-title {
@@ -60,7 +129,6 @@
 
 .mini-editor input {
   min-width: 0;
-  width: 65%;
   border: 1px solid #dae1d0;
   border-radius: 4px;
   padding: 6px 9px;
