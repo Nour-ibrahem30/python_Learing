@@ -1,16 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Supabase Configuration
+// Note: These are public credentials (anon key is designed to be public)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://pzrqdqmcjdqrxngbhcgx.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6cnFkcW1jamRxcnhuZ2JoY2d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5OTM0MjQsImV4cCI6MjEwNzU2OTQyNH0.F6BZPd8Ud_c3eAJMP5OBaBQ-Y_LLGVXpG0GA9j6X80U';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    'Supabase credentials not found. Auth features will not work.\n' +
-    'Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file.'
-  );
-}
-
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key'
-);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
