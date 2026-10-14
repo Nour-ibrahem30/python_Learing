@@ -1,0 +1,7 @@
+{
+  "task_id": "task-site-enhancement",
+  "task_description": "Major enhancement to the Python learning platform: add SEO, dark mode, progress tracking, enhanced About, 404 page, PDF links, Cloudinary prep, and backend scaffolding",
+  "status": "completed",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}
