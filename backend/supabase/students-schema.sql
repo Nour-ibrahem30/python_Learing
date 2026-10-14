@@ -7,6 +7,20 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ==========================================
+-- Valid Codes Table (الأكواد المسموح بيها)
+-- الـ Admin بيضيف الأكواد هنا قبل ما الطالب يقدر يسجل
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS valid_codes (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  code TEXT UNIQUE NOT NULL,          -- الكود المسموح بيه
+  is_used BOOLEAN DEFAULT FALSE,       -- هل الكود اتستخدم؟
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  used_at TIMESTAMPTZ,
+  used_by UUID                         -- مين استخدم الكود
+);
+
+-- ==========================================
 -- Students Table (بدل auth.users)
 -- ==========================================
 
@@ -54,6 +68,8 @@ CREATE TABLE IF NOT EXISTS watch_history (
 -- ==========================================
 
 CREATE INDEX IF NOT EXISTS idx_students_code ON students(code);
+CREATE INDEX IF NOT EXISTS idx_valid_codes_code ON valid_codes(code);
+CREATE INDEX IF NOT EXISTS idx_valid_codes_unused ON valid_codes(code) WHERE is_used = FALSE;
 CREATE INDEX IF NOT EXISTS idx_lesson_progress_student ON lesson_progress(student_id);
 CREATE INDEX IF NOT EXISTS idx_watch_history_student ON watch_history(student_id);
 
@@ -61,14 +77,18 @@ CREATE INDEX IF NOT EXISTS idx_watch_history_student ON watch_history(student_id
 -- Enable Row Level Security
 -- ==========================================
 
+ALTER TABLE valid_codes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE students ENABLE ROW LEVEL SECURITY;
 ALTER TABLE lesson_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE watch_history ENABLE ROW LEVEL SECURITY;
 
 -- ==========================================
--- RLS Policies - Allow all operations
--- (لأن مفيش auth.users - بنستخدم anon key)
+-- RLS Policies
 -- ==========================================
+
+-- Valid Codes: السماح بالقراءة فقط للتحقق
+CREATE POLICY "valid_codes_select_all" ON valid_codes FOR SELECT USING (true);
+CREATE POLICY "valid_codes_update_all" ON valid_codes FOR UPDATE USING (true);
 
 -- Students: السماح بكل العمليات
 CREATE POLICY "students_select_all" ON students FOR SELECT USING (true);
@@ -95,3 +115,17 @@ CREATE POLICY "history_delete_all" ON watch_history FOR DELETE USING (true);
 INSERT INTO students (code, name, pin, role) 
 VALUES ('ADMIN', 'نور إبراهيم', 'Nawar2024!', 'ADMIN')
 ON CONFLICT (code) DO NOTHING;
+
+-- ==========================================
+-- إضافة أكواد تجريبية للطلاب
+-- انت كـ Admin هتضيف الأكواد دي يدوي من Supabase Dashboard
+-- أو من لوحة التحكم لما نعملها
+-- ==========================================
+
+-- مثال: إضافة 5 أكواد تجريبية
+-- INSERT INTO valid_codes (code) VALUES 
+--   ('STD2024001'),
+--   ('STD2024002'),
+--   ('STD2024003'),
+--   ('STD2024004'),
+--   ('STD2024005');

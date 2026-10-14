@@ -78,11 +78,24 @@ export function RegisterPage() {
     }
 
     try {
-      const success = await register(name, code, pin);
-      if (success) {
+      const result = await register(name, code, pin);
+      if (result.success) {
         navigate(from, { replace: true });
       } else {
-        setError('الكود ده موجود قبل كده، جرب كود تاني');
+        // Handle different error types
+        switch (result.error) {
+          case 'INVALID_CODE':
+            setError('الكود ده مش صحيح! لازم تستلم كود من المدرس الأول');
+            break;
+          case 'CODE_USED':
+            setError('الكود ده اتستخدم قبل كده');
+            break;
+          case 'CODE_EXISTS':
+            setError('الكود ده مسجل بيه حساب قبل كده');
+            break;
+          default:
+            setError('حدث خطأ، حاول مرة تانية');
+        }
       }
     } catch (err) {
       setError('حدث خطأ، حاول مرة تانية');
@@ -142,12 +155,12 @@ export function RegisterPage() {
                     id="code"
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase().replace(/\s/g, ''))}
-                    placeholder="اختار كود زي: AHMED123"
+                    placeholder="ادخل الكود اللي استلمته"
                     autoComplete="username"
                     dir="ltr"
                   />
                 </div>
-                <span className="form-hint">الكود ده هتستخدمه عشان تسجل دخولك</span>
+                <span className="form-hint">الكود ده بتستلمه من المدرس</span>
               </div>
 
               <div className="form-group">

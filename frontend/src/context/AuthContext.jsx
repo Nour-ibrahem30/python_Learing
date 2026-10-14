@@ -105,28 +105,48 @@ export function AuthProvider({ children }) {
 
   /**
    * Register new user with code and PIN
+   * الكود لازم يكون موجود في valid_codes ومش مستخدم
    */
   const register = useCallback(async (name, code, pin) => {
     setIsLoading(true);
     
     try {
-      // Check if code already exists
+      const upperCode = code.toUpperCase();
+      
+      // Step 1: Check if code exists in valid_codes and is not used
+      const { data: validCode, error: validError } = await supabase
+        .from('valid_codes')
+        .select('*')
+        .eq('code', upperCode)
+        .single();
+
+      if (validError || !validCode) {
+        console.error('Register error: Invalid code - not issued by admin');
+        return { success: false, error: 'INVALID_CODE' };
+      }
+
+      if (validCode.is_used) {
+        console.error('Register error: Code already used');
+        return { success: false, error: 'CODE_USED' };
+      }
+
+      // Step 2: Check if code already exists in students (double check)
       const { data: existing } = await supabase
         .from('students')
         .select('id')
-        .eq('code', code.toUpperCase())
+        .eq('code', upperCode)
         .single();
 
       if (existing) {
-        console.error('Register error: Code already exists');
-        return false;
+        console.error('Register error: Code already registered');
+        return { success: false, error: 'CODE_EXISTS' };
       }
 
-      // Create new student
+      // Step 3: Create new student
       const { data: newUser, error } = await supabase
         .from('students')
         .insert({
-          code: code.toUpperCase(),
+          code: upperCode,
           name: name,
           pin: pin,
           role: 'USER',
@@ -136,8 +156,18 @@ export function AuthProvider({ children }) {
 
       if (error) {
         console.error('Register error:', error);
-        return false;
+        return { success: false, error: 'REGISTER_FAILED' };
       }
+
+      // Step 4: Mark the code as used
+      await supabase
+        .from('valid_codes')
+        .update({ 
+          is_used: true, 
+          used_at: new Date().toISOString(),
+          used_by: newUser.id 
+        })
+        .eq('code', upperCode);
 
       const userData = {
         id: newUser.id,
@@ -152,10 +182,10 @@ export function AuthProvider({ children }) {
       
       setUser(userData);
       setIsAuthenticated(true);
-      return true;
+      return { success: true };
     } catch (error) {
       console.error('Register error:', error);
-      return false;
+      return { success: false, error: 'UNKNOWN_ERROR' };
     } finally {
       setIsLoading(false);
     }
