@@ -8,6 +8,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ProgressPage } from './pages/ProgressPage';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { CustomCursor } from './components/common/CustomCursor';
 import { useCustomCursor } from './hooks/useCustomCursor';
@@ -40,6 +41,7 @@ function AppContent() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/progress" element={<ProgressPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

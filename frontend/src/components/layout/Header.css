@@ -337,6 +337,15 @@
   color: #dc2626;
 }
 
+.dropdown-item.admin-link {
+  color: var(--blue);
+}
+
+.dropdown-item.admin-link svg {
+  color: var(--blue);
+  opacity: 1;
+}
+
 @media (max-width: 700px) {
   .auth-buttons {
     gap: 8px;
