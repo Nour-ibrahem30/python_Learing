@@ -1,0 +1,26 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Backend Supabase Setup - Create Supabase client config, SQL schema with RLS policies, and update package.json dependencies. This feature establishes the foundation for the migration without breaking existing code yet.",
+  "status": "completed",
+  "steps": [
+    "Update backend/package.json: remove @prisma/client and prisma from dependencies/devDependencies; add @supabase/supabase-js@^2; remove db:generate, db:push, db:migrate, db:studio scripts; add 'db:seed': 'node supabase/seed.js'",
+    "Update backend/.env.example: replace DATABASE_URL with SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY; remove JWT_SECRET and JWT_EXPIRES_IN (Supabase Auth handles JWTs)",
+    "Create backend/src/config/supabase.js: initialize and export two Supabase clients - 'supabase' (anon key for regular operations) and 'supabaseAdmin' (service key for admin operations like user management)",
+    "Create backend/supabase/schema.sql with: (a) users table extension with profile fields (name, avatar_url, role ENUM default 'USER', is_verified, last_login) referencing auth.users(id), (b) lesson_progress table with user_id FK, lesson_slug, status ENUM, progress_percent, timestamps, (c) watch_history table with user_id FK, lesson_slug, watch_time, last_position, (d) comments table with user_id FK, lesson_slug, content, is_question, parent_id self-reference, (e) site_visits table with nullable user_id FK, page_path, user_agent, ip_address, visited_at, (f) lessons table with slug unique, title, title_ar, description, category, number, video_url, cloudinary_id, pdf_url, docs_url, is_published, timestamps. Enable RLS on all tables. Add RLS policies: users profile - users can read own, admins can read all; lesson_progress/watch_history - users can CRUD own; comments - anyone can read, users can insert/update/delete own; site_visits - insert open, select admin only; lessons - select where is_published OR user is admin, admin can CRUD",
+    "Create backend/supabase/seed.js: use supabaseAdmin to create admin user via auth.admin.createUser, then insert profile row and seed lessons data (copy lesson array from prisma/seed.js)"
+  ],
+  "acceptance_criteria": [
+    "backend/package.json has @supabase/supabase-js and no prisma packages",
+    "backend/src/config/supabase.js exports working supabase and supabaseAdmin clients",
+    "backend/supabase/schema.sql contains all tables matching Prisma schema with RLS enabled",
+    "backend/supabase/seed.js can seed data when SUPABASE_URL and SUPABASE_SERVICE_KEY are set",
+    "backend/.env.example has SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY"
+  ],
+  "verification": [
+    "Run 'npm install' in backend folder - should succeed without prisma",
+    "Check that backend/src/config/supabase.js imports @supabase/supabase-js without syntax errors"
+  ],
+  "blocked_reason": null,
+  "findings": "Schema includes is_admin() helper function for RLS policies. Trigger on auth.users auto-creates profile in users table. FEAT-002 should update auth.middleware.js to use Supabase JWT verification. FEAT-003 should update controllers to import from config/supabase.js instead of config/database.js."
+}
