@@ -1,44 +1,30 @@
 {
   "id": "FEAT-002",
   "type": "feat",
-  "description": "Core UX features: Dark mode with persistence, progress tracking in localStorage, enhanced About section with photo/social links, custom 404 page, and Cloudinary video player preparation",
+  "description": "Enhance LessonCard with 3D tilt effect on hover, animated gradient border, typing animation for code preview, improved staggered card entrance, scale+glow on hover, and animated progress bar for viewed lessons. Must preserve Link navigation, viewed badge, topic chips, and all card metadata display.",
   "status": "completed",
   "steps": [
-    "Create src/hooks/useDarkMode.js: Hook that reads/writes 'theme' key to localStorage, defaults to 'light', returns { isDark, toggle }. Check for prefers-color-scheme on first load.",
-    "In src/styles/variables.css: Add [data-theme='dark'] selector with dark color variables: --paper: #1a1a1a, --ink: #e8e8e8, --blue: #5a8adb, --yellow: #f9d65c, --line: #333, plus adjusted shadows. Keep existing :root as light theme.",
-    "In src/components/layout/Header.jsx: Add dark mode toggle button after nav, before CTA. Use sun (☀️) for light mode, moon (🌙) for dark mode. Import and use useDarkMode hook.",
-    "In src/components/layout/Header.css: Style .theme-toggle button with circular shape, hover effects, icon sizing.",
-    "In src/App.jsx: Import useDarkMode, apply data-theme attribute to root div based on isDark state.",
-    "Create src/hooks/useProgress.js: Hook using localStorage key 'lesson-progress' storing array of viewed lesson slugs. Export markLessonViewed(slug), isLessonViewed(slug), getProgress() returning { viewed: string[], totalLessons: number }.",
-    "In src/pages/LessonPage.jsx: Import useProgress, call markLessonViewed(slug) in useEffect on mount. Show 'شوفت الدرس ده ✓' badge near lesson title if isLessonViewed returns true.",
-    "In src/components/sections/LessonCard.jsx: Import useProgress, show checkmark badge on cards where isLessonViewed(lesson.slug) is true.",
-    "In src/components/sections/LessonCard.css: Style .viewed-badge with green background, white checkmark, positioned top-right of thumbnail.",
-    "In src/components/sections/About.jsx: Add photo placeholder div (with a Python snake emoji or icon as placeholder), add social links section with YouTube, GitHub, Twitter/X links. Expand the story text to be more personal and engaging. Keep all text in Egyptian Arabic.",
-    "In src/components/sections/About.css: Add .about-photo styles (circular, border), .social-links grid with hover effects.",
-    "Create src/pages/NotFoundPage.jsx: Fun 404 page with Python theme. Include: large '404' heading, confused Python snake emoji, Egyptian Arabic message 'الصفحة دي مش موجودة يا صاحبي', animated elements with framer-motion, links to home and lessons.",
-    "Create src/pages/NotFoundPage.css: Style the 404 page with centered layout, large typography, animation-friendly structure.",
-    "In src/App.jsx: Add catch-all route <Route path='*' element={<NotFoundPage />} /> after existing routes.",
-    "In src/data/lessons.js: Add cloudinaryId field (empty string '') to each lesson object to prepare for Cloudinary integration.",
-    "Create src/components/common/VideoPlayer.jsx: Placeholder component that accepts lessonCloudinaryId and videoUrl props. For now, show the existing video-coming-soon or video-placeholder UI based on videoUrl. Add comment noting where Cloudinary SDK integration will go.",
-    "Create src/components/common/VideoPlayer.css: Responsive video player container styles, aspect-ratio 16/9.",
-    "In src/pages/LessonPage.jsx: Replace the video section JSX with the new <VideoPlayer /> component, passing lesson.cloudinaryId and lesson.videoUrl."
+    "1. In src/components/sections/LessonCard.jsx: Create a custom useTilt hook using useMotionValue and useTransform to calculate rotateX/rotateY based on mouse position relative to card. Apply perspective transform to the card wrapper. Gate behind useReducedMotion check",
+    "2. In src/components/sections/LessonCard.css: Add .lesson::before with animated gradient border using @keyframes gradient-rotate that rotates a conic-gradient. Use clip-path or mask to show only border. Add CSS variable --border-opacity that changes on hover",
+    "3. In src/components/sections/LessonCard.jsx: Add typing animation to .code-preview using motion.span elements that reveal characters sequentially. Use variants with staggerChildren: 0.02 and custom delay based on card index. Show cursor at end of typing",
+    "4. In src/components/sections/LessonCard.css: Add @keyframes glow-pulse for box-shadow animation on hover. Add .lesson:hover with scale transform (1.02) and animated box-shadow using the keyframe",
+    "5. In src/components/sections/LessonCard.jsx: Enhance cardVariants with custom delay based on index prop passed from parent. Add viewport margin for earlier trigger",
+    "6. In src/components/sections/LessonCard.jsx and LessonCard.css: Add animated progress bar under thumbnail for viewed lessons. Create .progress-bar div with width animated from 0 to 100% when viewed=true. Style with gradient background and height 3px",
+    "7. Verify: Run 'npm run build' and confirm no errors. Ensure Link to='/lesson/${lesson.slug}' routing still works."
   ],
   "acceptance_criteria": [
-    "Dark mode toggle appears in header and toggles theme",
-    "Theme persists across page refreshes via localStorage",
-    "All components render correctly in both light and dark modes",
-    "Progress tracking saves viewed lessons to localStorage",
-    "LessonPage shows 'شوفت الدرس ده' badge when revisiting a viewed lesson",
-    "LessonCard shows checkmark badge on viewed lessons",
-    "About section shows photo placeholder and social links",
-    "404 page displays for unknown routes with Python-themed design",
-    "VideoPlayer component renders in lesson pages",
-    "All lessons have cloudinaryId field in lessons.js",
-    "npm run build completes successfully"
+    "Cards have subtle 3D tilt effect following mouse position on hover",
+    "Cards have animated gradient border that rotates on hover",
+    "Code preview text has typing animation when card enters viewport",
+    "Cards scale up (1.02x) and have glowing shadow on hover",
+    "Card entrance animation is staggered based on position in grid",
+    "Viewed lessons show animated progress bar filling to 100%",
+    "All interactions (click to navigate, hover states) preserved",
+    "npm run build passes with no errors"
   ],
   "verification": [
-    "npm run build"
+    "Run 'npm run build' in c:\\Users\\nouri\\Desktop\\Githup Projects\\python_Learing and verify exit code 0"
   ],
   "blocked_reason": null,
-  "findings": "All features implemented successfully. Dark mode toggle in Header with localStorage persistence. Progress tracking with useProgress hook. Enhanced About section with photo placeholder and social links. Python-themed 404 page. VideoPlayer component ready for Cloudinary integration. cloudinaryId field added to all lessons."
+  "findings": "Implemented all LessonCard animations: 1) 3D tilt effect using useMotionValue/useTransform hooks tracking mouse position with perspective transform, 2) Animated gradient border using conic-gradient with @keyframes rotation on hover, 3) Typing animation for code preview using IntersectionObserver with staggered start based on card index, 4) Scale (1.02x) + glow-pulse keyframe animation on hover, 5) Improved staggered card entrance with index-based delay, 6) Progress bar for viewed lessons with shimmer animation. All animations respect prefers-reduced-motion via useReducedMotion hook. Dark mode support added. Link navigation, viewed badge, topic chips, and all card metadata preserved."
 }

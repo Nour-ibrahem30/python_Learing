@@ -2,6 +2,17 @@
    Lesson Card
    ================================ */
 
+/* Wrapper for 3D perspective */
+.lesson-card-wrapper {
+  height: 100%;
+}
+
+.lesson-card-inner {
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
 .lesson {
   display: flex;
   flex-direction: column;
@@ -13,17 +24,90 @@
   cursor: pointer;
   height: 100%;
   text-align: right;
+  position: relative;
   transition:
     box-shadow 0.22s ease,
     border-color 0.22s ease;
 }
 
+/* Animated gradient border */
+.gradient-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent, var(--blue)),
+    #f9d65c,
+    #8b6fbd,
+    #4a8c47,
+    #b06090,
+    var(--accent, var(--blue))
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: gradient-rotate 3s linear infinite paused;
+  transition: opacity 0.3s ease;
+}
+
+.lesson:hover .gradient-border {
+  opacity: 0.8;
+  animation-play-state: running;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background: conic-gradient(
+      from 0deg,
+      var(--accent, var(--blue)),
+      #f9d65c,
+      #8b6fbd,
+      #4a8c47,
+      #b06090,
+      var(--accent, var(--blue))
+    );
+  }
+  100% {
+    background: conic-gradient(
+      from 360deg,
+      var(--accent, var(--blue)),
+      #f9d65c,
+      #8b6fbd,
+      #4a8c47,
+      #b06090,
+      var(--accent, var(--blue))
+    );
+  }
+}
+
+/* Glow effect on hover */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 3px 0 var(--accent, var(--blue)),
+      0 10px 36px rgba(0, 0, 0, 0.09),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      0 0 20px color-mix(in srgb, var(--accent, var(--blue)) 30%, transparent);
+  }
+  50% {
+    box-shadow:
+      inset 0 3px 0 var(--accent, var(--blue)),
+      0 15px 45px rgba(0, 0, 0, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      0 0 30px color-mix(in srgb, var(--accent, var(--blue)) 45%, transparent);
+  }
+}
+
 .lesson:hover {
   border-color: #c8cbbf;
-  box-shadow:
-    inset 0 3px 0 var(--accent, var(--blue)),
-    0 10px 36px rgba(0, 0, 0, 0.09),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+  animation: glow-pulse 2s ease-in-out infinite;
 }
 
 /* ── Thumbnail ───────────────────── */
@@ -33,6 +117,39 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+}
+
+/* Progress bar for viewed lessons */
+.progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #22c55e,
+    #4ade80,
+    #22c55e
+  );
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s ease-in-out infinite;
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes progress-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Viewed badge */
@@ -102,6 +219,25 @@
   margin: 0;
   padding: 11px 15px 0;
   font-family: 'Space Grotesk', monospace;
+  min-height: 3.5em;
+}
+
+/* Typing cursor animation */
+.typing-cursor {
+  display: inline-block;
+  animation: blink-cursor 0.75s step-end infinite;
+  color: currentColor;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+@keyframes blink-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .thumb-symbol {
@@ -222,6 +358,62 @@
 
 .lesson:hover .lesson-cta {
   color: var(--accent, var(--blue));
+}
+
+/* ── Dark mode support ──────────── */
+
+[data-theme='dark'] .lesson {
+  background: #222;
+  border-color: #333;
+}
+
+[data-theme='dark'] .lesson:hover {
+  border-color: #444;
+}
+
+[data-theme='dark'] .gradient-border {
+  opacity: 0;
+}
+
+[data-theme='dark'] .lesson:hover .gradient-border {
+  opacity: 0.6;
+}
+
+[data-theme='dark'] .thumbnail.blue   { background: #1d3454; color: #a8c7f0; }
+[data-theme='dark'] .thumbnail.yellow { background: #3d3618; color: #f0d890; }
+[data-theme='dark'] .thumbnail.purple { background: #2d2540; color: #c8b8e8; }
+[data-theme='dark'] .thumbnail.green  { background: #1d3520; color: #a8d8a0; }
+[data-theme='dark'] .thumbnail.pink   { background: #382530; color: #e0b0c8; }
+[data-theme='dark'] .thumbnail.orange { background: #352818; color: #e8c8a0; }
+
+[data-theme='dark'] .code-header {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] .lesson-desc {
+  color: #999;
+}
+
+[data-theme='dark'] .topic-chip {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #aaa;
+}
+
+[data-theme='dark'] .lesson-footer {
+  border-top-color: #333;
+}
+
+[data-theme='dark'] .lesson-index {
+  color: #666;
+}
+
+[data-theme='dark'] .lesson-cta {
+  color: #aaa;
+}
+
+[data-theme='dark'] .progress-bar-container {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* ── Responsive ──────────────────── */
