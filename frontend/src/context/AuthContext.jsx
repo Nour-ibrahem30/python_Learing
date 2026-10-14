@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
       const { data: users, error } = await supabase
         .from('students')
         .select('*')
-        .eq('code', code.toUpperCase())
+        .eq('code', code.trim())
         .single();
 
       if (error || !users) {
@@ -111,7 +111,7 @@ export function AuthProvider({ children }) {
     setIsLoading(true);
     
     try {
-      const upperCode = code.toUpperCase();
+      const upperCode = code.trim();
       
       // Step 1: Check if code exists in valid_codes and is not used
       const { data: validCode, error: validError } = await supabase

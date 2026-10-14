@@ -72,8 +72,8 @@ export function LoginPage() {
                     type="text"
                     id="code"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase())}
-                    placeholder="مثال: STUDENT001"
+                    onChange={(e) => setCode(e.target.value.replace(/\s/g, ''))}
+                    placeholder="مثال: 202310366"
                     autoComplete="username"
                     dir="ltr"
                   />

@@ -154,7 +154,7 @@ export function RegisterPage() {
                     type="text"
                     id="code"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase().replace(/\s/g, ''))}
+                    onChange={(e) => setCode(e.target.value.replace(/\s/g, ''))}
                     placeholder="ادخل الكود اللي استلمته"
                     autoComplete="username"
                     dir="ltr"
