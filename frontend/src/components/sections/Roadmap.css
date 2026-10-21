@@ -1,28 +1,35 @@
+/* ==========================================
+   Roadmap Section - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .roadmap {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
   gap: 90px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-primary);
 }
 
 .roadmap h2 {
   font-size: 39px;
+  color: var(--text-primary);
 }
 
 .roadmap h2 span {
-  color: var(--blue);
+  color: var(--accent-primary);
 }
 
 .roadmap-intro p {
   font-size: 15px;
-  color: #777d71;
+  color: var(--text-secondary);
   max-width: 340px;
   margin-bottom: 20px;
 }
 
 .handnote {
   font-size: 15px;
-  color: #7b8570;
+  color: var(--text-muted);
   transform: rotate(-7deg);
   margin-top: 23px;
   display: inline-block;
@@ -40,7 +47,7 @@
   top: 50px;
   bottom: 50px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--blue), #cbd2c1);
+  background: linear-gradient(to bottom, var(--accent-primary), var(--border-color));
   transform-origin: top;
   z-index: 0;
   border-radius: 2px;
@@ -67,27 +74,31 @@
   gap: 22px;
   align-items: center;
   padding: 23px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border-color);
   transition: all var(--transition-normal);
 }
 
 .step-link:hover {
-  background: linear-gradient(to left, transparent, rgba(48, 101, 200, 0.03));
+  background: linear-gradient(to left, transparent, rgba(99, 102, 241, 0.05));
+}
+
+[data-theme='dark'] .step-link:hover {
+  background: linear-gradient(to left, transparent, rgba(129, 140, 248, 0.08));
 }
 
 .step-arrow {
   margin-right: auto;
-  color: #72856a;
+  color: var(--text-muted);
   transition: all var(--transition-fast);
 }
 
 .step-link:hover .step-arrow {
-  color: var(--blue);
+  color: var(--accent-primary);
   transform: translate(-5px, -5px);
 }
 
 .steps small {
-  color: #7d8674;
+  color: var(--text-muted);
   font-size: 11px;
 }
 
@@ -95,36 +106,37 @@
   font-size: 18px;
   margin: 5px 0;
   font-weight: 600;
+  color: var(--text-primary);
   transition: color var(--transition-fast);
 }
 
 .step-link:hover h3 {
-  color: var(--blue);
+  color: var(--accent-primary);
 }
 
 .steps p {
   font-size: 13px;
-  color: #7c8275;
+  color: var(--text-secondary);
   margin: 4px 0;
 }
 
 .step-num {
   align-self: flex-start;
   font: 17px 'Space Grotesk', monospace;
-  color: #6e8162;
-  border: 1px solid #cbd2c1;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   padding: 12px;
   transition: all var(--transition-fast);
-  background: var(--paper);
+  background: var(--bg-secondary);
   position: relative;
   z-index: 1;
   transform-origin: center;
 }
 
 .step-link:hover .step-num {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   color: white;
   animation: icon-bounce 0.3s ease;
 }

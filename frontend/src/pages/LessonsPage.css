@@ -1,20 +1,31 @@
+/* ==========================================
+   Lessons Page - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .lessons-page {
   min-height: 100vh;
+  background: var(--bg-primary);
 }
 
 .lessons-hero {
-  background: linear-gradient(135deg, #f0f4e8 0%, #e8ecf5 100%);
+  background: var(--bg-tertiary);
   padding: 80px 0 60px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme='dark'] .lessons-hero {
+  background: var(--bg-secondary);
 }
 
 .lessons-hero h1 {
   font-size: clamp(32px, 4vw, 48px);
   margin: 15px 0;
+  color: var(--text-primary);
 }
 
 .lessons-hero p {
-  color: #686b65;
+  color: var(--text-secondary);
   font-size: 17px;
   max-width: 500px;
 }
@@ -40,21 +51,22 @@
   gap: 15px;
   margin-bottom: 30px;
   font-size: 14px;
-  color: #73786f;
+  color: var(--text-secondary);
 }
 
 .lessons-stats button {
-  background: #f0f1eb;
+  background: var(--bg-tertiary);
   border: none;
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 12px;
   cursor: pointer;
+  color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .lessons-stats button:hover {
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
 }
 
@@ -68,8 +80,8 @@
 .lesson-card {
   display: flex;
   flex-direction: column;
-  background: #fffefa;
-  border: 1px solid #dedfd6;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   overflow: hidden;
   transition: all var(--transition-normal);
@@ -78,7 +90,7 @@
 .lesson-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--blue);
+  border-color: var(--accent-primary);
 }
 
 .lesson-card-thumb {
@@ -88,12 +100,21 @@
   overflow: hidden;
 }
 
+/* Light mode thumb colors */
 .lesson-card-thumb.blue { background: #dce8f5; color: #214a7c; }
 .lesson-card-thumb.yellow { background: #f7e7ad; color: #65521e; }
 .lesson-card-thumb.purple { background: #e4dff0; color: #635085; }
 .lesson-card-thumb.green { background: #dde8da; color: #446643; }
 .lesson-card-thumb.pink { background: #ecdde3; color: #79566c; }
 .lesson-card-thumb.orange { background: #efe0d2; color: #8a6240; }
+
+/* Dark mode thumb colors */
+[data-theme='dark'] .lesson-card-thumb.blue { background: #1d3454; color: #a8c7f0; }
+[data-theme='dark'] .lesson-card-thumb.yellow { background: #3d3618; color: #f0d890; }
+[data-theme='dark'] .lesson-card-thumb.purple { background: #2d2540; color: #c8b8e8; }
+[data-theme='dark'] .lesson-card-thumb.green { background: #1d3520; color: #a8d8a0; }
+[data-theme='dark'] .lesson-card-thumb.pink { background: #382530; color: #e0b0c8; }
+[data-theme='dark'] .lesson-card-thumb.orange { background: #352818; color: #e8c8a0; }
 
 .thumb-number {
   font: 600 12px 'Space Grotesk', monospace;
@@ -122,7 +143,7 @@
 }
 
 .lesson-label {
-  color: var(--blue);
+  color: var(--accent-primary);
   font-size: 11px;
   font-weight: 600;
 }
@@ -131,11 +152,12 @@
   font-size: 20px;
   margin: 8px 0 4px;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .lesson-title-en {
   font: 500 13px 'Space Grotesk', monospace;
-  color: #8a8f82;
+  color: var(--text-muted);
   margin: 0 0 8px;
   direction: ltr;
   text-align: right;
@@ -143,7 +165,7 @@
 
 .lesson-desc {
   font-size: 14px;
-  color: #6b7063;
+  color: var(--text-secondary);
   margin: 0 0 15px;
   line-height: 1.7;
 }
@@ -157,29 +179,29 @@
 }
 
 .topic-tag {
-  background: #f0f2ea;
+  background: var(--bg-tertiary);
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 11px;
-  color: #5a6152;
+  color: var(--text-secondary);
 }
 
 .lesson-card-footer {
   display: flex;
   justify-content: space-between;
   padding-top: 15px;
-  border-top: 1px solid #e7e8df;
+  border-top: 1px solid var(--border-color);
   font-size: 12px;
-  color: #8a8c81;
+  color: var(--text-muted);
 }
 
 .lesson-card-footer .arrow {
-  color: #424c3d;
+  color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .lesson-card:hover .lesson-card-footer .arrow {
-  color: var(--blue);
+  color: var(--accent-primary);
   transform: translateX(-5px);
 }
 
@@ -195,7 +217,7 @@
 }
 
 .empty-state p {
-  color: #717c68;
+  color: var(--text-secondary);
   font-size: 16px;
 }
 

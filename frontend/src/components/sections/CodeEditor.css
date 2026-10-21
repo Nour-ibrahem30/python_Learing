@@ -1,3 +1,8 @@
+/* ==========================================
+   Code Editor - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .hero-art {
   position: relative;
   padding: 40px 0 34px;
@@ -8,8 +13,12 @@
   color: #e2e6ee;
   border: 1px solid #424854;
   border-radius: 12px;
-  box-shadow: 10px 16px 0 #e8e9df;
+  box-shadow: 10px 16px 0 var(--border-color);
   overflow: hidden;
+}
+
+[data-theme='dark'] .editor {
+  box-shadow: 10px 16px 0 var(--bg-tertiary);
 }
 
 .editor-top {
@@ -144,13 +153,14 @@
   left: -20px;
   z-index: 2;
   font-size: 14px;
-  background: #f9f8f0;
-  border: 1px solid #c7cabc;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 11px 20px;
   transform: rotate(-7deg);
   direction: rtl;
-  box-shadow: 3px 4px 0 #dadcd0;
+  box-shadow: 3px 4px 0 var(--border-color);
+  color: var(--text-primary);
 }
 
 .small-sticker span {
@@ -161,7 +171,7 @@
 
 .orbit {
   font: 36px 'Space Grotesk';
-  color: var(--blue);
+  color: var(--accent-primary);
   position: absolute;
   bottom: -26px;
   right: 35px;

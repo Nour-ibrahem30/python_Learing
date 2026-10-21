@@ -1,11 +1,12 @@
 /* ==========================================
-   Progress Page
+   Progress Page - بايثون مع نوار
+   Unified Color System
    ========================================== */
 
 .progress-page {
   min-height: calc(100vh - 80px);
   padding: var(--space-xl) var(--space-md);
-  background: var(--paper);
+  background: var(--bg-primary);
 }
 
 .progress-page .container {
@@ -22,13 +23,12 @@
 .progress-header h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: var(--space-sm);
 }
 
 .progress-header p {
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
 }
 
 /* Stats Grid */
@@ -44,8 +44,8 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-lg);
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   transition: all var(--transition-fast);
 }
@@ -56,7 +56,7 @@
 }
 
 .stat-card.highlight {
-  background: linear-gradient(135deg, var(--blue), #5a8adb);
+  background: var(--accent-gradient);
   border: none;
   color: white;
 }
@@ -82,8 +82,8 @@
 
 /* Overall Progress */
 .overall-progress {
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   margin-bottom: var(--space-xl);
@@ -94,23 +94,24 @@
   justify-content: space-between;
   margin-bottom: var(--space-sm);
   font-weight: 500;
+  color: var(--text-primary);
 }
 
 .progress-percent {
-  color: var(--blue);
+  color: var(--accent-primary);
   font-weight: 700;
 }
 
 .progress-bar {
   height: 12px;
-  background: var(--line);
+  background: var(--bg-tertiary);
   border-radius: 6px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--blue), #5a8adb);
+  background: var(--accent-gradient);
   border-radius: 6px;
 }
 
@@ -123,6 +124,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: var(--space-lg);
+  color: var(--text-primary);
 }
 
 .lessons-grid {
@@ -135,8 +137,8 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md);
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   text-decoration: none;
   transition: all var(--transition-fast);
@@ -145,13 +147,13 @@
 .lesson-progress-card:hover {
   transform: translateX(-4px);
   box-shadow: var(--shadow-md);
-  border-color: var(--blue);
+  border-color: var(--accent-primary);
 }
 
 .lesson-progress-card .lesson-number {
   width: 48px;
   height: 48px;
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
   border-radius: var(--radius-md);
   display: flex;
@@ -163,15 +165,15 @@
 }
 
 .lesson-progress-card.theme-green .lesson-number {
-  background: #16a34a;
+  background: var(--success);
 }
 
 .lesson-progress-card.theme-purple .lesson-number {
-  background: #7c3aed;
+  background: var(--accent-secondary);
 }
 
 .lesson-progress-card.theme-orange .lesson-number {
-  background: #ea580c;
+  background: var(--warning);
 }
 
 .lesson-info {
@@ -181,35 +183,30 @@
 .lesson-info h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .lesson-info p {
   font-size: 0.85rem;
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
 }
 
 .completed-badge {
   padding: 6px 12px;
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-light);
+  color: var(--success);
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   flex-shrink: 0;
 }
 
-[data-theme='dark'] .completed-badge {
-  background: rgba(22, 163, 74, 0.2);
-}
-
 /* Empty State */
 .empty-state {
   text-align: center;
   padding: var(--space-2xl);
-  background: rgba(48, 101, 200, 0.05);
+  background: var(--bg-tertiary);
   border-radius: var(--radius-lg);
 }
 
@@ -222,20 +219,19 @@
 .empty-state h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: var(--space-sm);
 }
 
 .empty-state p {
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
   margin-bottom: var(--space-lg);
 }
 
 .btn-primary {
   display: inline-block;
   padding: 12px 24px;
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
   border-radius: var(--radius-md);
   font-weight: 600;
@@ -244,15 +240,16 @@
 }
 
 .btn-primary:hover {
-  background: #2554a8;
+  background: var(--accent-secondary);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-accent);
 }
 
 /* Continue Section */
 .continue-section {
   text-align: center;
   padding: var(--space-xl);
-  background: linear-gradient(135deg, rgba(48, 101, 200, 0.1), rgba(90, 138, 219, 0.1));
+  background: var(--bg-tertiary);
   border-radius: var(--radius-xl);
 }
 
@@ -260,11 +257,11 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: var(--space-sm);
+  color: var(--text-primary);
 }
 
 .continue-section p {
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
   margin-bottom: var(--space-lg);
 }
 

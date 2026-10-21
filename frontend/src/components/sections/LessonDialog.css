@@ -1,7 +1,12 @@
+/* ==========================================
+   Lesson Dialog - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .dialog-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20, 32, 39, 0.7);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
@@ -9,16 +14,21 @@
   padding: 20px;
 }
 
+[data-theme='dark'] .dialog-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
 .lesson-dialog {
   position: relative;
-  border: 1px solid #d4d9ce;
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   max-width: 510px;
   width: 100%;
   padding: 40px;
   text-align: center;
+  box-shadow: var(--shadow-xl);
 }
 
 .close {
@@ -28,20 +38,20 @@
   border: 0;
   background: none;
   font-size: 27px;
-  color: #737b6b;
+  color: var(--text-muted);
   cursor: pointer;
   transition: color var(--transition-fast);
 }
 
 .close:hover {
-  color: var(--ink);
+  color: var(--text-primary);
 }
 
 .dialog-play {
   width: 75px;
   height: 75px;
-  background: #e0e9f4;
-  color: var(--blue);
+  background: var(--bg-tertiary);
+  color: var(--accent-primary);
   border-radius: 50%;
   margin: 10px auto 22px;
   display: grid;
@@ -51,31 +61,44 @@
 }
 
 .lesson-dialog .eyebrow {
-  color: #626962;
+  color: var(--text-secondary);
 }
 
 .lesson-dialog h2 {
   font-size: 26px;
   margin: 10px 0;
+  color: var(--text-primary);
 }
 
 .lesson-dialog > p {
   font-size: 15px;
-  color: #727b68;
+  color: var(--text-secondary);
   margin-bottom: 20px;
 }
 
 .dialog-placeholder {
-  color: #9a9f8f;
+  color: var(--text-muted);
   font-style: italic;
   padding: 20px;
-  background: #f5f5ef;
+  background: var(--bg-tertiary);
   border-radius: var(--radius-sm);
   margin-top: 15px;
+  border: 1px solid var(--border-color);
 }
 
 .close-btn {
   margin-top: 15px;
-  background: #e2e3dc;
-  color: var(--ink);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.close-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
 }

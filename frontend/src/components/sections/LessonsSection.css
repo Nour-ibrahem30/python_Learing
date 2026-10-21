@@ -1,7 +1,13 @@
+/* ==========================================
+   Lessons Section - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .section {
   max-width: 1260px;
   margin: auto;
   padding: 78px 40px;
+  background: var(--bg-primary);
 }
 
 .section-heading {
@@ -16,10 +22,11 @@ h2 {
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 12px 0;
+  color: var(--text-primary);
 }
 
 .section-heading p {
-  color: #73786f;
+  color: var(--text-secondary);
   font-size: 15px;
   margin: 5px 0;
 }
@@ -37,44 +44,46 @@ h2 {
 }
 
 .filters button {
-  border: 1px solid var(--line);
+  border: 1px solid var(--border-color);
   background: transparent;
   padding: 8px 18px;
   border-radius: var(--radius-sm);
   font-size: 13px;
-  color: #656c60;
+  color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .filters button:hover {
-  border-color: #bfc3bc;
+  border-color: var(--text-muted);
+  color: var(--text-primary);
 }
 
 .filters button.active {
-  background: var(--ink);
+  background: var(--accent-primary);
   color: white;
-  border-color: var(--ink);
+  border-color: var(--accent-primary);
 }
 
 .search {
   display: flex;
   align-items: center;
   gap: 9px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border-color);
   padding: 7px 13px;
   border-radius: var(--radius-sm);
   min-width: 250px;
-  background: #fffdf9;
-  transition: border-color var(--transition-fast);
+  background: var(--bg-secondary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search:focus-within {
-  border-color: var(--blue);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .search span {
   font-size: 23px;
-  color: #737d6f;
+  color: var(--text-muted);
 }
 
 .search input {
@@ -83,6 +92,11 @@ h2 {
   background: transparent;
   outline: 0;
   font-size: 13px;
+  color: var(--text-primary);
+}
+
+.search input::placeholder {
+  color: var(--text-muted);
 }
 
 .lesson-grid {
@@ -94,12 +108,12 @@ h2 {
 .empty-state {
   text-align: center;
   padding: 35px;
-  color: #717c68;
+  color: var(--text-secondary);
 }
 
 .see-all-link {
   font-size: 14px;
-  color: var(--blue);
+  color: var(--accent-primary);
   transition: all var(--transition-fast);
 }
 
@@ -124,24 +138,27 @@ h2 {
 }
 
 .btn-outline {
-  border: 1px solid var(--line);
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: var(--ink);
+  color: var(--text-primary);
 }
 
 .btn-outline:hover {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
   transform: translateX(-5px);
 }
 
 .btn-primary {
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
+  border: none;
 }
 
 .btn-primary:hover {
-  filter: brightness(0.94);
+  background: var(--accent-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-accent);
 }
 
 @media (max-width: 700px) {

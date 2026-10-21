@@ -1,6 +1,11 @@
+/* ==========================================
+   Ticker Section - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .ticker {
-  border-block: 1px solid #d6d9cc;
-  background: #f1f1e8;
+  border-block: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   display: flex;
   align-items: center;
   padding: 21px 18px;
@@ -10,6 +15,7 @@
   white-space: nowrap;
   font-family: 'Space Grotesk', monospace;
   position: relative;
+  color: var(--text-primary);
 }
 
 /* Gradient fade edges */
@@ -26,12 +32,12 @@
 
 .ticker::before {
   left: 0;
-  background: linear-gradient(to right, #f1f1e8, transparent);
+  background: linear-gradient(to right, var(--bg-tertiary), transparent);
 }
 
 .ticker::after {
   right: 0;
-  background: linear-gradient(to left, #f1f1e8, transparent);
+  background: linear-gradient(to left, var(--bg-tertiary), transparent);
 }
 
 .ticker-track {
@@ -42,7 +48,7 @@
 }
 
 .ticker i {
-  color: var(--blue);
+  color: var(--accent-primary);
   font-size: 23px;
   font-style: normal;
 }

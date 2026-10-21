@@ -1,3 +1,8 @@
+/* ==========================================
+   Not Found Page - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .not-found-page {
   min-height: calc(100vh - 200px);
   display: flex;
@@ -6,6 +11,7 @@
   padding: 60px 20px;
   position: relative;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
 /* Floating Code Snippets */
@@ -20,7 +26,7 @@
   position: absolute;
   font-family: 'Space Grotesk', monospace;
   font-size: clamp(14px, 2vw, 24px);
-  color: var(--blue);
+  color: var(--accent-primary);
   opacity: 0.1;
   user-select: none;
   font-weight: 500;
@@ -45,7 +51,7 @@
   font-size: clamp(100px, 20vw, 180px);
   font-weight: 800;
   font-family: 'Space Grotesk', monospace;
-  color: var(--blue);
+  color: var(--accent-primary);
   margin: 0;
   line-height: 1;
   letter-spacing: -5px;
@@ -69,14 +75,14 @@
 
 .not-found-title.glitch::before {
   left: 3px;
-  text-shadow: -3px 0 #ff6b6b;
+  text-shadow: -3px 0 var(--error);
   animation: glitch-before 3s infinite linear alternate-reverse;
   clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
 }
 
 .not-found-title.glitch::after {
   left: -3px;
-  text-shadow: 3px 0 #4ecdc4;
+  text-shadow: 3px 0 var(--success);
   animation: glitch-after 2s infinite linear alternate-reverse;
   clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
 }
@@ -161,13 +167,13 @@
 .not-found-message {
   font-size: 24px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--text-primary);
   margin: 20px 0 10px;
 }
 
 .not-found-sub {
   font-size: 16px;
-  color: #73786f;
+  color: var(--text-secondary);
   margin: 0 0 30px;
 }
 
@@ -191,25 +197,25 @@
 }
 
 .not-found-actions .btn-primary {
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
-  box-shadow: 0 4px 15px rgba(48, 101, 200, 0.3);
+  box-shadow: var(--shadow-accent);
 }
 
 .not-found-actions .btn-primary:hover {
-  filter: brightness(0.92);
-  box-shadow: 0 8px 25px rgba(48, 101, 200, 0.4);
+  background: var(--accent-secondary);
+  transform: translateY(-2px);
 }
 
 .not-found-actions .btn-secondary {
   background: transparent;
-  border: 1px solid var(--line);
-  color: var(--ink);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .not-found-actions .btn-secondary:hover {
-  border-color: var(--ink);
-  background: var(--ink);
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
   color: white;
 }
 
@@ -276,20 +282,6 @@
   margin: 0;
   font: 14px/1.8 'Space Grotesk', monospace;
   color: #e2e6ee;
-}
-
-/* Dark mode support */
-[data-theme='dark'] .not-found-message {
-  color: var(--ink);
-}
-
-[data-theme='dark'] .not-found-sub {
-  color: #9a9fa8;
-}
-
-[data-theme='dark'] .floating-snippet {
-  color: var(--blue);
-  opacity: 0.15;
 }
 
 /* Reduced motion support */

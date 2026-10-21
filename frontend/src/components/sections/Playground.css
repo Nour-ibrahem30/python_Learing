@@ -1,5 +1,10 @@
+/* ==========================================
+   Playground Section - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .playground {
-  background: #ecf0e5;
+  background: var(--bg-tertiary);
   border-radius: var(--radius-lg);
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -10,28 +15,33 @@
 
 .playground h2 {
   font-size: 36px;
+  color: var(--text-primary);
 }
 
 .playground h2 span {
-  color: var(--blue);
+  color: var(--accent-primary);
 }
 
 .playground > div:first-child p {
   font-size: 15px;
-  color: #737b69;
+  color: var(--text-secondary);
 }
 
 .playground code {
-  color: var(--blue);
-  background: rgba(48, 101, 200, 0.1);
+  color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.1);
   padding: 2px 6px;
   border-radius: 4px;
 }
 
+[data-theme='dark'] .playground code {
+  background: rgba(129, 140, 248, 0.15);
+}
+
 .mini-editor {
-  border: 1px solid #c4ceba;
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background: #fcfdf8;
+  background: var(--bg-secondary);
   padding: 23px;
   font: 15px 'Space Grotesk', monospace;
   position: relative;
@@ -62,7 +72,7 @@
   transform: translateY(-50%);
   width: 2px;
   height: 18px;
-  background: var(--blue);
+  background: var(--accent-primary);
   opacity: 0;
   pointer-events: none;
 }
@@ -93,11 +103,11 @@
 }
 
 .syntax-function {
-  color: #2563eb;
+  color: var(--accent-primary);
 }
 
 .syntax-string {
-  color: #059669;
+  color: var(--success);
 }
 
 /* Output typing animation */
@@ -108,9 +118,9 @@
 
 .mini-title {
   font-size: 11px;
-  color: #7b8971;
+  color: var(--text-muted);
   padding-bottom: 20px;
-  border-bottom: 1px solid #e3e7db;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 22px;
   display: flex;
   justify-content: space-between;
@@ -124,24 +134,28 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  color: var(--blue);
+  color: var(--accent-primary);
 }
 
 .mini-editor input {
   min-width: 0;
-  border: 1px solid #dae1d0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 6px 9px;
   font: 14px 'Space Grotesk', monospace;
-  color: #778249;
-  background: #f6f8ef;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
   transition: all var(--transition-fast);
 }
 
 .mini-editor input:focus {
-  border-color: var(--blue);
+  border-color: var(--accent-primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(48, 101, 200, 0.1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+[data-theme='dark'] .mini-editor input:focus {
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
 }
 
 .mini-editor > code {
@@ -150,10 +164,11 @@
   font-size: 14px;
   background: transparent;
   padding: 0;
+  color: var(--text-primary);
 }
 
 .run-btn {
-  background: var(--blue);
+  background: var(--accent-primary);
   color: white;
   border: 0;
   border-radius: 5px;
@@ -167,7 +182,8 @@
 }
 
 .run-btn:hover {
-  filter: brightness(0.94);
+  background: var(--accent-secondary);
+  transform: translateY(-1px);
 }
 
 .run-btn:disabled {
@@ -185,10 +201,10 @@
 }
 
 .output {
-  border-top: 1px solid #e0e5d5;
+  border-top: 1px solid var(--border-color);
   padding-top: 17px;
   margin-top: 20px;
-  color: #657a4b;
+  color: var(--success);
   overflow-wrap: anywhere;
   font-size: 14px;
   min-height: 24px;

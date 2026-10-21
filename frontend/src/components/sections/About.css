@@ -1,6 +1,12 @@
+/* ==========================================
+   About Section - بايثون مع نوار
+   Unified Color System
+   ========================================== */
+
 .about-section {
   padding-block: 95px;
   position: relative;
+  background: var(--bg-primary);
 }
 
 .about-container {
@@ -18,12 +24,12 @@
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #dce8f5 0%, #e8f0fa 100%);
-  border: 4px solid var(--blue);
+  background: var(--bg-tertiary);
+  border: 4px solid var(--accent-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(48, 101, 200, 0.2);
+  box-shadow: var(--shadow-accent);
 }
 
 .photo-placeholder {
@@ -38,10 +44,11 @@
 .about-content h2 {
   font-size: 35px;
   margin-bottom: 20px;
+  color: var(--text-primary);
 }
 
 .about-content p {
-  color: #757c6e;
+  color: var(--text-secondary);
   font-size: 15px;
   line-height: 1.9;
   margin-bottom: 15px;
@@ -67,13 +74,14 @@
   font-size: 14px;
   font-weight: 500;
   transition: all var(--transition-fast);
-  border: 1px solid var(--line);
-  background: white;
-  color: var(--ink);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .social-link:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .social-link.youtube:hover {
@@ -101,9 +109,10 @@
 /* Tag */
 .about-tag {
   font: 18px/1.6 'Space Grotesk', monospace;
-  border: 1px solid #cbcfc0;
+  border: 1px solid var(--border-color);
   padding: 23px;
-  background: #f4efdb;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
   position: absolute;
   bottom: 95px;
   left: 0;
@@ -112,25 +121,16 @@
 
 .about-tag b {
   font-size: 22px;
+  color: var(--accent-primary);
 }
 
-/* Dark mode support */
+/* Dark mode specific adjustments */
 [data-theme='dark'] .about-photo {
-  background: linear-gradient(135deg, #2a3040 0%, #303a4a 100%);
-}
-
-[data-theme='dark'] .about-content p {
-  color: #9a9fa8;
-}
-
-[data-theme='dark'] .social-link {
-  background: #2a2a2a;
-  border-color: var(--line);
+  background: var(--bg-tertiary);
 }
 
 [data-theme='dark'] .about-tag {
-  background: #3a3525;
-  border-color: #4a4535;
+  background: var(--bg-tertiary);
 }
 
 @media (max-width: 1000px) {

@@ -1,11 +1,12 @@
 /* ==========================================
-   Profile Page
+   Profile Page - بايثون مع نوار
+   Unified Color System
    ========================================== */
 
 .profile-page {
   min-height: calc(100vh - 80px);
   padding: var(--space-xl) var(--space-md);
-  background: var(--paper);
+  background: var(--bg-primary);
 }
 
 .profile-page .container {
@@ -21,13 +22,14 @@
   justify-content: center;
   min-height: 400px;
   gap: var(--space-md);
+  color: var(--text-secondary);
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid var(--line);
-  border-top-color: var(--blue);
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -42,8 +44,8 @@
   align-items: center;
   gap: var(--space-lg);
   padding: var(--space-xl);
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   margin-bottom: var(--space-lg);
 }
@@ -51,7 +53,7 @@
 .profile-avatar {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--blue), #5a8adb);
+  background: var(--accent-gradient);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -65,21 +67,19 @@
 .profile-info h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: var(--space-xs);
 }
 
 .profile-email {
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   direction: ltr;
   text-align: right;
 }
 
 .profile-joined {
-  color: var(--ink);
-  opacity: 0.5;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin-top: var(--space-xs);
 }
@@ -89,7 +89,7 @@
   display: flex;
   gap: var(--space-sm);
   padding: var(--space-sm);
-  background: var(--line);
+  background: var(--bg-tertiary);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-lg);
 }
@@ -102,27 +102,26 @@
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--ink);
-  opacity: 0.7;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: inherit;
 }
 
 .profile-tabs .tab:hover {
-  opacity: 1;
+  color: var(--text-primary);
 }
 
 .profile-tabs .tab.active {
-  background: var(--paper);
-  opacity: 1;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   box-shadow: var(--shadow-sm);
 }
 
 /* Profile Content */
 .profile-content {
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
 }
@@ -130,7 +129,7 @@
 .profile-section h2 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: var(--space-lg);
 }
 
@@ -143,14 +142,13 @@
 .info-item label {
   display: block;
   font-size: 0.85rem;
-  color: var(--ink);
-  opacity: 0.6;
+  color: var(--text-muted);
   margin-bottom: var(--space-xs);
 }
 
 .info-item p {
   font-size: 1rem;
-  color: var(--ink);
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -158,7 +156,7 @@
 .progress-placeholder {
   text-align: center;
   padding: var(--space-2xl);
-  background: rgba(48, 101, 200, 0.05);
+  background: var(--bg-tertiary);
   border-radius: var(--radius-lg);
 }
 
@@ -169,12 +167,12 @@
 }
 
 .progress-placeholder p {
-  color: var(--ink);
+  color: var(--text-primary);
   font-size: 1rem;
 }
 
 .progress-placeholder .sub {
-  opacity: 0.6;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-top: var(--space-sm);
 }
@@ -191,30 +189,25 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--bg-tertiary);
   border-radius: var(--radius-md);
-}
-
-[data-theme='dark'] .setting-item {
-  background: rgba(255, 255, 255, 0.02);
 }
 
 .setting-item h4 {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--text-primary);
   margin-bottom: var(--space-xs);
 }
 
 .setting-item p {
   font-size: 0.85rem;
-  color: var(--ink);
-  opacity: 0.6;
+  color: var(--text-secondary);
 }
 
 .btn-danger {
   padding: 10px 20px;
-  background: #dc2626;
+  background: var(--error);
   color: white;
   border: none;
   border-radius: var(--radius-md);
@@ -226,7 +219,7 @@
 }
 
 .btn-danger:hover {
-  background: #b91c1c;
+  filter: brightness(0.9);
 }
 
 /* Responsive */
